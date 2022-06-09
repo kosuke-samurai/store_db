@@ -2,7 +2,7 @@
 
 // DB接続
 // 各種項目設定 ※基本変えない。dbnameを変えるだけ
-$dbn ='mysql:dbname=gs_graduation_program;charset=utf8mb4;port=3306;host=localhost';
+$dbn = 'mysql:dbname=gs_graduation_program;charset=utf8mb4;port=3306;host=localhost';
 $user = 'root';
 $pwd = '';
 
@@ -31,93 +31,180 @@ try {
   //fetchAll() 関数でデータ自体を取得する．
   $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-//できているか確認する際、テーブルを見やすくするコツ
-//echo '<pre>';
-//var_dump($result);
-//echo '</pre>';
-//exit();
+  //できているか確認する際、テーブルを見やすくするコツ
+  //echo '<pre>';
+  //var_dump($result);
+  //echo '</pre>';
+  //exit();
 
-foreach($result as $record){
+  foreach ($result as $record) {
 
-//header('Content-type: ' . $result['pictype']);
-//echo $result['picture'];
-} 
-}catch (PDOException $e) {
+    //header('Content-type: ' . $result['pictype']);
+    //echo $result['picture'];
+  }
+} catch (PDOException $e) {
   echo json_encode(["sql error" => "{$e->getMessage()}"]);
   //exit();
 }
 
+//緯度経度抽出
+
+$idokeido = [];
+
+for ($i = 0; $i < count($result); $i++) {
+
+  mb_language("Japanese"); //文字コードの設定
+  mb_internal_encoding("UTF-8");
+
+  $address = $result[$i]["adress"];
+  $apikey = "dj00aiZpPTRFcTZhNWVRRmZGTyZzPWNvbnN1bWVyc2VjcmV0Jng9NzU-";
+  $address = urlencode($address);
+  $url = "https://map.yahooapis.jp/geocode/V1/geoCoder?output=json&recursive=true&appid=" . $apikey . "&query=" . $address;
+  $contents = file_get_contents($url);
+  $contents = json_decode($contents);
+  $Coordinates = $contents->Feature[0]->Geometry->Coordinates;
+  $geo = explode(",", $Coordinates);
+  $lon = $geo[0];
+  $lat = $geo[1];
+  //echo "緯度：" . $lat . " 経度：" . $lon;
+
+  //[]使ったらできた！
+  $idokeido[] =  array($result[$i]["name"], $lat, $lon);
+}
 
 
+
+//var_dump($idokeido);
+//exit();
 
 ?>
 
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/store_read.css">
-    <title>たまりbar</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/store_read.css">
+  <style>
+    #map {
+      width: 100%;
+      height: 300px;
+
+    }
+  </style>
+  <title>たまりbar</title>
 </head>
+
 <body>
-<header>
+  <header>
     <h1>店舗情報の一覧</h1>
     <p>ご利用できるお店</p>
-</header>
+  </header>
 
-<main>
-<ul class="storelist">      
-<?php for($i = 0; $i < count($result); $i++): ?>
+  <div id="map"></div>
+  <main>
+    <ul class="storelist">
+      <?php for ($i = 0; $i < count($result); $i++) : ?>
 
-    <div>
-        <div class="box">
-    <li>
-    <h2><?= $result[$i]["name"]; ?> </h2>
-    </li>
-    <li>
-    <img src="image.php?id=<?= $result[$i]['id']; ?>" width="auto" height="300">
-    </li>
-    <li>              
-       <ul class="detail">
-           <li><h3>基本情報</h3></li>
+        <div>
+          <div class="box">
             <li>
-            <p>お店のジャンル：<span class="bold"><?= $result[$i]["category"]; ?></span></p>
+              <h2><?= $result[$i]["name"]; ?> </h2>
             </li>
             <li>
-            <p>客層：<span class="bold"><?= $result[$i]["moodselect"]; ?></span></p>
+              <img src="<?= $result[$i]['filesurl']; ?>" width="auto" height="300">
             </li>
             <li>
-            <p>予算：<span class="bold"><?= $result[$i]["budget"]; ?></span></p>
+              <ul class="detail">
+                <li>
+                  <h3>基本情報</h3>
+                </li>
+                <li>
+                  <p>お店のジャンル：<span class="bold"><?= $result[$i]["category"]; ?></span></p>
+                </li>
+                <li>
+                  <p>客層：<span class="bold"><?= $result[$i]["moodselect"]; ?></span></p>
+                </li>
+                <li>
+                  <p>予算：<span class="bold"><?= $result[$i]["budget"]; ?></span></p>
+                </li>
+                <li>
+                  <p>住所：<span class="bold"><?= $result[$i]["adress"]; ?></span></p>
+                </li>
+              </ul>
             </li>
             <li>
-            <p>住所：<span class="bold"><?= $result[$i]["adress"]; ?></span></p>
+              <a href="store_move.php?id=<?php echo $result[$i]['id']; ?>" class="button">詳細を見る</a>
             </li>
-        </ul>
-    </li>
-    <li>
-    <a href="store_move.php?id=<?php echo $result[$i]['id']; ?>" class="button">詳細を見る</a>
-    </li>
-  </div>
-    </div>
-<?php endfor; ?> 
-<ul> 
-</main>
-        
-
-    
-    
-    
-</main>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"> </script>
-<script>
+          </div>
+        </div>
+      <?php endfor; ?>
+      <ul>
+  </main>
 
 
+  <script src="https://maps.googleapis.com/maps/api/js?key=＜API-KEY＞"></script>
+  <script>
+    const idokeido = <?= json_encode($idokeido) ?>;
+    console.log(idokeido);
+    console.log(idokeido[0][1]);
 
 
-</script>
+    var map;
+    var marker = [];
+    var infoWindow = [];
+
+    function initMap() {
+      // 地図の作成
+      var mapLatLng = new google.maps.LatLng(idokeido[0][1], idokeido[0][2]); // 緯度経度のデータ作成
+      map = new google.maps.Map(document.getElementById('map'), { // #sampleに地図を埋め込む
+        center: mapLatLng, // 地図の中心を指定
+        zoom: 6 // 地図のズームを指定
+      });
+
+      // マーカー毎の処理
+      for (var i = 0; i < idokeido.length; i++) {
+        console.log(idokeido[i][1]);
+        markerLatLng = new google.maps.LatLng(idokeido[i][1], idokeido[i][2]); // 緯度経度のデータ作成
+
+        marker[i] = new google.maps.Marker({ // マーカーの追加
+          position: markerLatLng, // マーカーを立てる位置を指定
+          map: map // マーカーを立てる地図を指定
+        });
+
+        infoWindow[i] = new google.maps.InfoWindow({ // 吹き出しの追加
+          content: '<div>' + idokeido[i][0] + '</div>' // 吹き出しに表示する内容
+        });
+        markerEvent(i);
+
+      }
+
+      function markerEvent(i) {
+        marker[i].addListener('click', function() { // マーカーをクリックしたとき
+          infoWindow[i].open(map, marker[i]); // 吹き出しの表示
+        });
+      }
+
+    }
+
+
+
+
+
+
+    window.onload = function() {
+      initMap();
+    };
+  </script>
+
+
+
+
+  </main>
+
+
 </body>
 
 </html>
