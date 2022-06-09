@@ -57,7 +57,7 @@ for ($i = 0; $i < count($result); $i++) {
   mb_internal_encoding("UTF-8");
 
   $address = $result[$i]["adress"];
-  $apikey = "dj00aiZpPTRFcTZhNWVRRmZGTyZzPWNvbnN1bWVyc2VjcmV0Jng9NzU-";
+  $apikey = "";
   $address = urlencode($address);
   $url = "https://map.yahooapis.jp/geocode/V1/geoCoder?output=json&recursive=true&appid=" . $apikey . "&query=" . $address;
   $contents = file_get_contents($url);
