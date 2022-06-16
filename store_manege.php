@@ -1,6 +1,12 @@
 <?php
 // DB接続
-include('functions.php');
+session_start();
+include("functions.php");
+check_store_session_id();
+
+//var_dump($_SESSION['id']);
+//exit();
+
 $pdo = connect_to_db();
 
 // SQL作成&実行
@@ -25,7 +31,7 @@ try {
     //exit();
 
     for ($i = 0; $i < count($result); $i++) {
-        if ($result[$i]["username"] === "わたし") {
+        if ($result[$i]["username"] === $_SESSION['username']) {
             $hoge_array[] = array($result[$i]["id"]);
         }
     }
@@ -57,26 +63,24 @@ try {
 </head>
 
 <body>
-    <header>
+    <header class="store_header">
         <h1>登録した情報の一覧</h1>
-        <p>（店舗オーナー様ページ）</p>
+        <p>（店舗オーナー:『<?= $_SESSION['username'] ?>』様ページ）</p>
     </header>
 
 
     <main>
         <ul class="storelist">
             <?php for ($i = 0; $i < count($result); $i++) : ?>
-                <?php if ($result[$i]["username"] === "わたし") : ?>
+                <?php if ($result[$i]["username"] === $_SESSION['username']) : ?>
 
-                    <div>
-                        <div class="box">
-                            <li>
-                                <h2><?= $result[$i]["name"]; ?> </h2>
-                                <a href='store_manege_edit.php?id=<?php echo $result[$i]['id']; ?>' class="">編集する</a>
-                                <a href='store_manege_delete.php?id=<?php echo $result[$i]['id']; ?>' onclick="return confirm('削除したデータは復元できません。本当に削除しますか？')" class="">削除</button>
-                            </li>
-                        </div>
-                    </div>
+
+                    <li class="box">
+                        <h2><?= $result[$i]["name"]; ?> </h2>
+                        <a href='store_manege_edit.php?id=<?php echo $result[$i]['id']; ?>' class="">編集する</a>
+                        <a href='store_manege_delete.php?id=<?php echo $result[$i]['id']; ?>' onclick="return confirm('削除したデータは復元できません。本当に削除しますか？')" class="">削除</a>
+                    </li>
+
 
                 <?php endif; ?>
             <?php endfor; ?>
@@ -85,6 +89,16 @@ try {
         <div class="store_manege_make">
             <div>
                 <a href="store_input.php" class="button">新規作成</a>
+            </div>
+        </div>
+        <div class="store_manege_make">
+            <div>
+                <a href="store_logout.php" class="button">ログアウト</a>
+            </div>
+        </div>
+        <div class="store_manege_make">
+            <div>
+                <a href="store_register_edit.php?id=<?= $_SESSION['id']; ?>" class="button">ユーザー情報を編集する</a>
             </div>
         </div>
     </main>

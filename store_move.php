@@ -1,4 +1,8 @@
-<?php 
+<?php
+session_start();
+include("functions.php");
+check_customer_session_id();
+
 $pdo=new PDO('mysql:host=localhost;dbname=gs_graduation_program;charset=utf8','root','');
 $sql = "SELECT * FROM store_db WHERE id = :id";
 $statement=$pdo->prepare($sql);
@@ -10,4 +14,3 @@ $detail=$statement->fetch(PDO::FETCH_ASSOC);
 $statement=null;
 $pdo=null;
 require_once 'store_detail.php';
-?>

@@ -1,4 +1,7 @@
 <?php
+session_start();
+include("functions.php");
+check_store_session_id();
 //POSTデータ確認
 //echo '<pre>';
 //var_dump($_FILES["picture"]);
@@ -101,5 +104,5 @@ try {
 }
 
 // ★SQL実行の処理★
-header('Location:store_input.php');
+header('Location:store_manege.php');
 exit();

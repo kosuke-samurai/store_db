@@ -13,6 +13,17 @@ header {
     background-color: lawngreen;
 }
 
+.store_header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-size: cover;
+    height: 150px;
+    text-align: center;
+    background-color: rgb(231, 0, 252);
+}
+
 main {
     max-width: 960px;
     margin: auto;
@@ -74,9 +85,11 @@ dd {
     flex-wrap: wrap;
     justify-content: center;
     margin: auto;
-    padding: 100px 0;
+    padding: 100px 0 10px 0;
     width: 800px;
 }
+
+
 
 .info {
     box-sizing: border-box;
@@ -139,4 +152,45 @@ button {
 
 .margin {
     margin-left: 10px;
+}
+
+.register_button {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: auto;
+}
+
+
+/*吹き出し
+.tooltip:before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: -50px;
+    border: 12px solid transparent;
+    border-right: 12px solid #808080;
+}
+*/
+
+.tooltip {
+    position: absolute;
+    background-color: #808080;
+    color: white;
+    font-size: 0.8em;
+    border-radius: 0.5em;
+    padding: 10px;
+    margin: -5px 10px 100px 700px;
+    display: none;
+}
+
+.tooltip2 {
+    position: absolute;
+    background-color: #808080;
+    color: white;
+    font-size: 0.8em;
+    border-radius: 0.5em;
+    padding: 10px;
+    margin: 60px 10px 100px 700px;
+    display: none;
 }

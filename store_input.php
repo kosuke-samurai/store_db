@@ -1,3 +1,12 @@
+<?php
+session_start();
+include("functions.php");
+check_store_session_id();
+
+//var_dump($_SESSION['username']);
+
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -6,11 +15,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/store_input.css">
+  <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
   <title>たまりbar</title>
 </head>
 
 <body>
-  <header>
+  <header class="store_header">
     <h1>店舗情報の入力</h1>
     <p>すべての項目をご記入ください</p>
   </header>
@@ -19,11 +29,9 @@
     <form action="store_create.php" method="POST" enctype="multipart/form-data">
 
       <input type="text" name="filesurl" id="filesurl" value="">
+      <input type="text" name="username" value="<?= $_SESSION['username']; ?>">
 
       <dl class="input">
-
-        <dt class="required">ユーザー名（管理用）</dt>
-        <dd><input type="text" name="username" class="info" required></dd>
 
         <dt class="required">店舗名</dt>
         <dd><input type="text" name="name" class="info" required></dd>
@@ -134,7 +142,7 @@
         <dd><input type="date" name="openday" class="info" required></dd>
 
         <dt class="required">郵便番号（7桁ハイフンなし）</dt>
-        <dd><input type="text" pattern="^[0-9]*$" name="postadress" class="info" required></dd>
+        <dd><input type="text" pattern="^[0-9]*$" name="postadress" class="info" required maxlength="8" onKeyUp="AjaxZip3.zip2addr(this,'','adress','adress');"></dd>
 
         <dt class="required">住所</dt>
         <dd><input type="text" name="adress" class="info" required></dd>
@@ -156,6 +164,7 @@
   </main>
   <footer>@高橋</footer>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
@@ -167,7 +176,7 @@
 
     // Your web app's Firebase configuration
     const firebaseConfig = {
-      apiKey: "FIREBASE-API-KEY",
+      apiKey: "＜API - KEY＞ ",
       authDomain: "graduationprogram-45052.firebaseapp.com",
       projectId: "graduationprogram-45052",
       storageBucket: "graduationprogram-45052.appspot.com",
@@ -190,53 +199,69 @@
       let thisRef = storageRef.child(file.name)
 
       //アップロードの処理！
-      thisRef.put(file).then(res => {
-        console.log("アップロード成功");
-        alert("アップロード成功");
+      thisRef.put(file)
+        .then(res => {
+          console.log(res)
+          console.log("アップロード成功");
+          alert("アップロード成功");
+          storageRef.child(file.name).getDownloadURL()
+            .then(url => {
+              const filesurl = document.getElementById("filesurl")
+              //console.log(filesurl.value);
+              console.log(url);
+              filesurl.value = url;
 
-      }).catch(e => {
-        console.log("Error " + e);
-
-      }).then(
-        storageRef.child(file.name).getDownloadURL().then(url => {
-          const filesurl = document.getElementById("filesurl")
-          //console.log(filesurl.value);
-          console.log(url);
-          filesurl.value = url;
-
+            }).catch(e => {
+              console.log(e);
+            })
         }).catch(e => {
-          console.log(e);
-        })
-      );
+          console.log("Error " + e);
 
-      //URLダウンロード
-      /*
-      storageRef.child(file.name).getDownloadURL().then(url => {
-        console.log(url);
+        }).then(
+          //URLダウンロード
+          // storageRef.child(file.name).getDownloadURL().then(url => {
+          //   const filesurl = document.getElementById("filesurl")
+          //   //console.log(filesurl.value);
+          //   console.log(url);
+          //   filesurl.value = url;
 
-      }).catch(e => {
-        console.log(e);
-      });
-      */
-
+          // }).catch(e => {
+          //   console.log(e);
+          // })
+        );
 
     }
 
     /*
-        function download() {
-          storageRef.child(file.name).getDownloadURL().then(url => {
-            console.log(url);
-
-          }).catch(e => {
-            console.log(e);
-          });
-        }
+        storageRef.child(file.name).getDownloadURL().then(url => {
+          console.log(url);
+          filesurl.value = url;
+        }).catch(e => {
+          console.log(e);
+        });
         */
 
-    //const filesurl = document.getElementById("filesurl")
-    //console.log(filesurl.value);
 
 
+
+    /*
+        function download() {
+          uploadData(() => {
+            storageRef.child(file.name).getDownloadURL().then(url => {
+              console.log(url);
+              filesurl.value = url;
+            }).catch(e => {
+              console.log(e);
+            });
+          });
+        }
+
+        download();
+
+        //const filesurl = document.getElementById("filesurl")
+        //console.log(filesurl.value);
+
+    */
 
     //画像の削除
     /*

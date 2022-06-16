@@ -1,19 +1,14 @@
 <?php
+session_start();
+include("functions.php");
+check_customer_session_id();
 
-// DB接続
-// 各種項目設定 ※基本変えない。dbnameを変えるだけ
-$dbn = 'mysql:dbname=gs_graduation_program;charset=utf8mb4;port=3306;host=localhost';
-$user = 'root';
-$pwd = '';
+//var_dump($_SESSION['username']);
+//var_dump($_SESSION['adress']);
+//var_dump($_SESSION['id']);
 
 
-try {
-  $pdo = new PDO($dbn, $user, $pwd);
-} catch (PDOException $e) {
-  echo json_encode(["db error" => "{$e->getMessage()}"]);
-  exit();
-}
-// （「dbError:...」が表示されたらdb接続でエラーが発生していることがわかる）
+$pdo = connect_to_db();
 
 
 // SQL作成&実行
@@ -57,7 +52,7 @@ for ($i = 0; $i < count($result); $i++) {
   mb_internal_encoding("UTF-8");
 
   $address = $result[$i]["adress"];
-  $apikey = "";
+  $apikey = "＜API-KEY＞";
   $address = urlencode($address);
   $url = "https://map.yahooapis.jp/geocode/V1/geoCoder?output=json&recursive=true&appid=" . $apikey . "&query=" . $address;
   $contents = file_get_contents($url);
@@ -72,11 +67,27 @@ for ($i = 0; $i < count($result); $i++) {
   $idokeido[] =  array($result[$i]["name"], $lat, $lon);
 }
 
-
-
 //var_dump($idokeido);
 //exit();
 
+
+//お客の緯度経度抽出※
+
+mb_language("Japanese"); //文字コードの設定
+mb_internal_encoding("UTF-8");
+//住所（梅田スカイビル）を入れて緯度経度を求める。
+$address = $_SESSION['adress'];
+$apikey = "＜API-KEY＞";
+$address = urlencode($address);
+$url = "https://map.yahooapis.jp/geocode/V1/geoCoder?output=json&recursive=true&appid=" . $apikey . "&query=" . $address;
+$contents = file_get_contents($url);
+$contents = json_decode($contents);
+$Coordinates = $contents->Feature[0]->Geometry->Coordinates;
+$geo = explode(",", $Coordinates);
+$lon = $geo[0];
+$lat = $geo[1];
+//echo "緯度：" . $lat . " 経度：" . $lon;
+$customer_idokeido =  array($lat, $lon);
 ?>
 
 <!DOCTYPE html>
@@ -100,7 +111,8 @@ for ($i = 0; $i < count($result); $i++) {
 <body>
   <header>
     <h1>店舗情報の一覧</h1>
-    <p>ご利用できるお店</p>
+    <p><?= $_SESSION['username']; ?> さま周辺のお店(<a href="customer_logout.php">ログアウトする</a>)(<a href="customer_register_edit.php?id=<?= $_SESSION['id']; ?>">ユーザー情報の編集</a>)</p>
+
   </header>
 
   <div id="map"></div>
@@ -142,6 +154,7 @@ for ($i = 0; $i < count($result); $i++) {
         </div>
       <?php endfor; ?>
       <ul>
+
   </main>
 
 
@@ -150,6 +163,8 @@ for ($i = 0; $i < count($result); $i++) {
     const idokeido = <?= json_encode($idokeido) ?>;
     console.log(idokeido);
     console.log(idokeido[0][1]);
+    const customer_idokeido = <?= json_encode($customer_idokeido) ?>;
+
 
 
     var map;
@@ -158,10 +173,10 @@ for ($i = 0; $i < count($result); $i++) {
 
     function initMap() {
       // 地図の作成
-      var mapLatLng = new google.maps.LatLng(idokeido[0][1], idokeido[0][2]); // 緯度経度のデータ作成
+      var mapLatLng = new google.maps.LatLng(customer_idokeido[0], customer_idokeido[1]); // 緯度経度のデータ作成
       map = new google.maps.Map(document.getElementById('map'), { // #sampleに地図を埋め込む
         center: mapLatLng, // 地図の中心を指定
-        zoom: 6 // 地図のズームを指定
+        zoom: 13 // 地図のズームを指定
       });
 
       // マーカー毎の処理

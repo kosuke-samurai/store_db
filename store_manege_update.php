@@ -1,5 +1,8 @@
 <?php
-include('functions.php');
+session_start();
+include("functions.php");
+check_store_session_id();
+
 $pdo = connect_to_db();
 //var_dump($_POST);
 //exit();

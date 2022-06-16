@@ -9,23 +9,23 @@ check_store_session_id();
 // DB接続
 
 
-$id = $_GET["id"];
+$id = $_SESSION["id"];
 
 $pdo = connect_to_db();
 
 
 // SQL実行
-$sql = 'DELETE FROM store_db WHERE id=:id';
+$sql = 'DELETE FROM users_table WHERE id=:id';
 
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':id', $id, PDO::PARAM_STR);
 
 try {
-  $status = $stmt->execute();
+    $status = $stmt->execute();
 } catch (PDOException $e) {
-  echo json_encode(["sql error" => "{$e->getMessage()}"]);
-  exit();
+    echo json_encode(["sql error" => "{$e->getMessage()}"]);
+    exit();
 }
 
-header("Location:store_manege.php");
+header("Location:store_login.php");
 exit();
