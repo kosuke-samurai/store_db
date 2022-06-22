@@ -97,6 +97,8 @@ $customer_idokeido =  array($lat, $lon);
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
   <link rel="stylesheet" href="css/store_read.css">
   <style>
     #map {
@@ -110,13 +112,33 @@ $customer_idokeido =  array($lat, $lon);
 
 <body>
   <header>
-    <h1>店舗情報の一覧</h1>
-    <p><?= $_SESSION['username']; ?> さま周辺のお店(<a href="customer_logout.php">ログアウトする</a>)(<a href="customer_register_edit.php?id=<?= $_SESSION['id']; ?>">ユーザー情報の編集</a>)</p>
+    <div class="header__wrapper">
+      <div>
+        <h1 class="tamari_family">たまりbar</h1>
+        <p class="tamari_family">移住者のコミュニティーが生まれる</p>
+        <p>ユーザー名:<?= $_SESSION['username']; ?></p>
+      </div>
+
+      <ul class="nav__list">
+        <li class="nav-item"><a href="top.php">トップに戻る</a></li>
+        <li class="nav-item"><a href="customer_logout.php">ログアウトする</a></li>
+        <li class="nav-item"><a href="customer_register_edit.php?id=<?= $_SESSION['id']; ?>">ユーザー情報の編集</a></li>
+      </ul>
+
+    </div>
 
   </header>
 
+
+
+  <h2 class="tamari_family"><?= $_SESSION['username']; ?> さま周辺のお店</h2>
   <div id="map"></div>
+
   <main>
+
+    <h2 class="tamari_family">お店の一覧</h2>
+
+
     <ul class="storelist">
       <?php for ($i = 0; $i < count($result); $i++) : ?>
 

@@ -42,18 +42,39 @@ try {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="css/store_input.css">
     <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
     <title>たまりbar</title>
 </head>
 
 <body>
+
     <header class="store_header">
-        <h1>店舗オーナー様：新規登録</h1>
-        <p>すべての項目をご記入ください</p>
+        <div class="header__wrapper">
+            <div>
+                <h1 class="tamari_family">たまりbar</h1>
+                <p class="tamari_family">移住者のコミュニティーが生まれる</p>
+                <p>管理者ページ</p>
+            </div>
+
+            <ul class="nav__list">
+                <li class="nav-item">オーナーさま管理者ページを作成します</li>
+                <li class="nav-item"><a href="top.php">トップに戻る</a></li>
+
+            </ul>
+
+        </div>
+
     </header>
 
+
+
+
     <main>
+
+        <h2>店舗オーナー（管理者）さま新規登録</h2>
+
         <form action="store_register_create.php" method="POST">
 
             <input type="text" name="is_admin" value="1">
@@ -61,32 +82,31 @@ try {
 
             <dl class="input">
 
-                <dt class="required">ユーザー名（管理用）</dt>
+                <dt class="store_required">ユーザー名（管理用）</dt>
                 <dd><input type="text" name="username" id="username" onchange="inputName(this)" class="info" required></dd>
 
                 <div class="tooltip" id="namealert">すでに登録されているため使えません</div>
 
-                <dt class="required">メールアドレス</dt>
-                <dd><input type="text" name="email" id="email" onchange="inputMail(this)" class="info" required></dd>
+                <dt class="store_required">メールアドレス</dt>
+                <dd><input type="email" name="email" id="email" onchange="inputMail(this)" class="info" required></dd>
 
                 <div class="tooltip2" id="emailalert">すでに登録されているため使えません</div>
 
-                <dt class="required">パスワード</dt>
+                <dt class="store_required">パスワード</dt>
                 <dd><input type="text" name="password" class="info" required></dd>
 
 
-                <dt class="required">郵便番号（7桁ハイフンなし）</dt>
+                <dt class="store_required">郵便番号（7桁ハイフンなし）</dt>
                 <dd><input type="text" pattern="^[0-9]*$" name="postadress" class="info" required maxlength="8" onKeyUp="AjaxZip3.zip2addr(this,'','adress','adress');"></dd>
 
-                <dt class="required">住所</dt>
+                <dt class="store_required">住所</dt>
                 <dd><input type="text" name="adress" class="info" required></dd>
 
-                <dt class="required">電話番号</dt>
+                <dt class="store_required">電話番号</dt>
                 <dd><input type="text" pattern="^[0-9]*$" name="tell" class="info" required></dd>
 
-                <div class="button">
-                    <button id="up">送信</button>
-                </div>
+
+                <button id="up" class="store_button">送信</button>
             </dl>
 
 
@@ -132,7 +152,7 @@ try {
             } else if (count["ng"] === 0) {
                 namealert.style.display = 'none';
                 document.getElementById("up").disabled = false;
-                document.getElementById("up").style.background = "#f0ad4e";
+                document.getElementById("up").style.background = "#3cb1b3";
             }
         }
 
@@ -163,7 +183,7 @@ try {
             } else if (count["ng"] === 0) {
                 emailalert.style.display = 'none';
                 document.getElementById("up").disabled = false;
-                document.getElementById("up").style.background = "#f0ad4e";
+                document.getElementById("up").style.background = "#3cb1b3";
             }
 
 

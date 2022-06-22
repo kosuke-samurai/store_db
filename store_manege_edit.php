@@ -39,6 +39,8 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
   <link rel="stylesheet" href="css/store_input.css">
   <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
   <title>たまりbar</title>
@@ -46,11 +48,30 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
 <body>
   <header class="store_header">
-    <h1>店舗情報の編集</h1>
-    <p>すべての項目をご記入ください</p>
+    <div class="header__wrapper">
+      <div>
+        <h1 class="tamari_family">たまりbar</h1>
+        <p class="tamari_family">移住者のコミュニティーが生まれる</p>
+        <p>管理者名:<?= $_SESSION['username']; ?></p>
+      </div>
+
+      <ul class="nav__list">
+        <li class="nav-item"><a href="store_manege.php">管理者ページに戻る</a></li>
+        <li class="nav-item"><a href="top.php">トップに戻る</a></li>
+        <li class="nav-item"><a href="store_logout.php">ログアウトする</a></li>
+        <li class="nav-item"><a href="store_register_edit.php?id=<?= $_SESSION['id']; ?>">ユーザー情報の編集</a></li>
+      </ul>
+
+    </div>
+
   </header>
 
+
+
+
   <main>
+    <h2>店舗情報の編集</h2>
+
     <form action="store_manege_update.php" method="POST" enctype="multipart/form-data">
 
       <input type="hidden" name="username" class="info" value="<?= $record['username'] ?>">
@@ -58,15 +79,15 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
       <input type="text" name="filesurl" id="filesurl" value="<?= $record['filesurl'] ?>">
 
       <dl class="input">
-        <dt class="required">店舗名</dt>
+        <dt class="store_required">店舗名</dt>
         <dd><input type="text" name="name" class="info" value="<?= $record['name'] ?>" required></dd>
 
-        <dt>店舗メイン写真</dt>
+        <dt class="store_required">店舗メイン写真</dt>
         <dd><input type="file" onchange="uploadData()" id="files" name="Files[]" multiple></dd>
 
 
 
-        <dt class="required">カテゴリー</dt>
+        <dt class="store_required">カテゴリー</dt>
         <dd>
           <ul>
             <li>
@@ -84,7 +105,7 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
           </ul>
         </dd>
 
-        <dt class="required">メイン客層は</dt>
+        <dt class="store_required">メイン客層は</dt>
         <dd>
           <ul>
             <li>
@@ -111,16 +132,16 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
           </ul>
         </dd>
 
-        <dt class="required">お店の雰囲気をアピールしてください</dt>
+        <dt class="store_required">お店の雰囲気をアピールしてください</dt>
         <dd><textarea type="textarea" name="moodtext" cols="30" rows="5" class="info" required><?= $record['moodtext'] ?></textarea></dd>
 
-        <dt class="required">提供メニューをアピールしてください</dt>
+        <dt class="store_required">提供メニューをアピールしてください</dt>
         <dd><textarea type="textarea" name="foodtext" cols="30" rows="5" class="info" required><?= $record['foodtext'] ?></textarea></dd>
 
-        <dt class="required">利用移住者に贈るメッセージを記入してください</dt>
+        <dt class="store_required">利用移住者に贈るメッセージを記入してください</dt>
         <dd><textarea type="textarea" name="message" cols="30" rows="5" class="info" required><?= $record['message'] ?></textarea></dd>
 
-        <dt class="required">利用できる時間帯は</dt>
+        <dt class="store_required">利用できる時間帯は</dt>
         <dd>
           <ul>
             <li>
@@ -132,7 +153,7 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
           </ul>
         </dd>
 
-        <dt class="required">予算</dt>
+        <dt class="store_required">予算</dt>
         <dd>
           <ul>
             <li>
@@ -156,20 +177,20 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
           </ul>
         </dd>
 
-        <dt class="required">お店の開業日</dt>
+        <dt class="store_required">お店の開業日</dt>
         <dd><input type="date" name="openday" class="info" required value="<?= $record['openday'] ?>"></dd>
 
-        <dt class="required">郵便番号（7桁ハイフンなし）</dt>
+        <dt class="store_required">郵便番号（7桁ハイフンなし）</dt>
         <dd><input type="text" pattern="^[0-9]*$" name="postadress" class="info" required value="<?= $record['postadress'] ?>" maxlength="8" onKeyUp="AjaxZip3.zip2addr(this,'','adress','adress');"></dd>
 
-        <dt class="required">住所</dt>
+        <dt class="store_required">住所</dt>
         <dd><input type="text" name="adress" class="info" required value="<?= $record['adress'] ?>"></dd>
 
-        <dt class="required">電話番号</dt>
+        <dt class="store_required">電話番号</dt>
         <dd><input type="text" pattern="^[0-9]*$" name="tell" class="info" required value="<?= $record['tell'] ?>"></dd>
 
-        <div class="button">
-          <button id="up">送信</button>
+        <div>
+          <button id="up" class="store_button">送信</button>
         </div>
       </dl>
 
@@ -177,8 +198,6 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
     </form>
 
-
-    <a href="store_manege.php">管理者用ページ</a>
   </main>
   <footer>@高橋</footer>
 
@@ -195,7 +214,7 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Your web app's Firebase configuration
     const firebaseConfig = {
-      apiKey: "＜API - KEY＞ ",
+      apiKey: "＜API-KEY＞",
       authDomain: "graduationprogram-45052.firebaseapp.com",
       projectId: "graduationprogram-45052",
       storageBucket: "graduationprogram-45052.appspot.com",

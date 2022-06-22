@@ -5,17 +5,35 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
     <link rel="stylesheet" href="css/store_input.css">
     <title>たまりbar</title>
 </head>
 
 <body>
     <header>
-        <h1>移住者さまログインページ</h1>
-        <p>すべての項目をご記入ください</p>
+        <div class="header__wrapper">
+            <div class="tamari_family">
+                <h1>たまりbar</h1>
+                <p>移住者のコミュニティーが生まれる</p>
+            </div>
+
+            <ul class="nav__list">
+                <li class="nav-item"><a href="top.php">トップに戻る</a></li>
+                <li class="nav-item"><a href="customer_register_input.php">新規登録はこちら</a></li>
+            </ul>
+
+        </div>
     </header>
 
+
+
+
     <main>
+
+        <h2>移住者さまログインページ</h2>
+
         <form action="customer_login_act.php" method="POST">
 
             <input type="text" name="is_admin" value="0">
@@ -32,7 +50,7 @@
                 </div>
             </dl>
         </form>
-        <button type=“button” onclick="location.href='customer_register_input.php'" class="register_button">新規登録</button>
+
 
 
 

@@ -26,6 +26,8 @@ $lat = $geo[1];
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
     <link rel="stylesheet" href="css/store_detail.css">
     <style>
         #map-canvas {
@@ -39,9 +41,26 @@ $lat = $geo[1];
 <body>
 
 
+
     <header>
-        <h1>店舗情報の詳細</h1>
+        <div class="header__wrapper">
+            <div>
+                <h1 class="tamari_family">たまりbar</h1>
+                <p class="tamari_family">移住者のコミュニティーが生まれる</p>
+                <p>ユーザー名:<?= $_SESSION['username']; ?></p>
+            </div>
+
+            <ul class="nav__list">
+                <li class="nav-item"><a href="store_read.php">店舗一覧に戻る</a></li>
+                <li class="nav-item"><a href="top.php">トップに戻る</a></li>
+                <li class="nav-item"><a href="customer_logout.php">ログアウトする</a></li>
+                <li class="nav-item"><a href="customer_register_edit.php?id=<?= $_SESSION['id']; ?>">ユーザー情報の編集</a></li>
+            </ul>
+
+        </div>
     </header>
+
+    <h2 class="tamari_family">店舗情報の詳細</h2>
 
     <main>
         <h1><?php echo $detail['name'] ?></h1>
@@ -83,13 +102,21 @@ $lat = $geo[1];
         <div id="map-canvas"></div>
 
         <div class="buttonli">
-            <p><a href="store_read.php" class="button">リストに戻る</a></p>
+            <div>
+                <p><a href="reserve.php?store=<?php echo $detail['name'] ?>" class="button">予約する</a></p>
+            </div>
         </div>
+        <div class="buttonli">
+            <div>
+                <p><a href="store_read.php" class="button">リストに戻る</a></p>
+            </div>
+        </div>
+
 
     </main>
 
 
-    <script src="https://maps.googleapis.com/maps/api/js?key= ＜API-KEY＞"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=＜API-KEY＞"></script>
     <script>
         const keido = <?= json_encode($lon) ?>;
         console.log(keido);

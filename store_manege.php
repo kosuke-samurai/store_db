@@ -48,6 +48,7 @@ try {
 
 
 
+
 ?>
 
 <!DOCTYPE html>
@@ -57,6 +58,7 @@ try {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="css/store_read.css">
     <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
     <title>たまりbar</title>
@@ -64,12 +66,32 @@ try {
 
 <body>
     <header class="store_header">
-        <h1>登録した情報の一覧</h1>
-        <p>（店舗オーナー:『<?= $_SESSION['username'] ?>』様ページ）</p>
+        <div class="header__wrapper">
+            <div>
+                <h1 class="tamari_family">たまりbar</h1>
+                <p class="tamari_family">移住者のコミュニティーが生まれる</p>
+                <p>管理者名:<?= $_SESSION['username']; ?></p>
+            </div>
+
+            <ul class="nav__list">
+                <li class="nav-item"><a href="store_input.php">店舗を登録する</a></li>
+                <li class="nav-item"><a href="top.php">トップに戻る</a></li>
+                <li class="nav-item"><a href="store_logout.php">ログアウトする</a></li>
+                <li class="nav-item"><a href="store_register_edit.php?id=<?= $_SESSION['id']; ?>">ユーザー情報の編集</a></li>
+            </ul>
+
+        </div>
+
     </header>
 
 
+
+
+
     <main>
+
+        <h2>登録店舗の一覧</h2>
+
         <ul class="storelist">
             <?php for ($i = 0; $i < count($result); $i++) : ?>
                 <?php if ($result[$i]["username"] === $_SESSION['username']) : ?>
@@ -77,6 +99,7 @@ try {
 
                     <li class="box">
                         <h2><?= $result[$i]["name"]; ?> </h2>
+                        <a href='store_calendar.php?store=<?php echo $result[$i]['name']; ?>' class="">実施日の登録</a>
                         <a href='store_manege_edit.php?id=<?php echo $result[$i]['id']; ?>' class="">編集する</a>
                         <a href='store_manege_delete.php?id=<?php echo $result[$i]['id']; ?>' onclick="return confirm('削除したデータは復元できません。本当に削除しますか？')" class="">削除</a>
                     </li>
@@ -88,19 +111,15 @@ try {
 
         <div class="store_manege_make">
             <div>
-                <a href="store_input.php" class="button">新規作成</a>
+                <button type=“button” onclick="location.href='store_input.php'" class="store_button input">店舗を登録する</button>
             </div>
         </div>
         <div class="store_manege_make">
             <div>
-                <a href="store_logout.php" class="button">ログアウト</a>
+                <button type=“button” onclick="location.href='store_logout.php'" class="store_button input">ログアウト</button>
             </div>
         </div>
-        <div class="store_manege_make">
-            <div>
-                <a href="store_register_edit.php?id=<?= $_SESSION['id']; ?>" class="button">ユーザー情報を編集する</a>
-            </div>
-        </div>
+
     </main>
 
     <script>

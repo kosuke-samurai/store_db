@@ -42,6 +42,7 @@ try {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="css/store_input.css">
     <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
     <title>たまりbar</title>
@@ -49,11 +50,26 @@ try {
 
 <body>
     <header>
-        <h1>移住者さま：新規登録</h1>
-        <p>すべての項目をご記入ください</p>
+        <div class="header__wrapper">
+            <div class="tamari_family">
+                <h1>たまりbar</h1>
+                <p>移住者のコミュニティーが生まれる</p>
+            </div>
+
+            <ul class="nav__list">
+                <li class="nav-item"><a href="top.php">トップに戻る</a></li>
+                <li class="nav-item"><a href="customer_login.php">ログイン</a></li>
+            </ul>
+
+        </div>
     </header>
 
+
+
     <main>
+
+        <h2>すべての項目を記入して新規登録</h2>
+
         <form action="customer_register_create.php" method="POST">
 
             <input type="text" name="is_admin" value="0">
@@ -68,7 +84,7 @@ try {
 
 
                 <dt class="required">メールアドレス</dt>
-                <dd><input type="text" name="email" id="email" onchange="inputMail(this)" class="info" required></dd>
+                <dd><input type="email" name="email" id="email" onchange="inputMail(this)" class="info" required></dd>
 
                 <div class="tooltip2" id="emailalert">すでに登録されているため使えません</div>
 
@@ -85,7 +101,7 @@ try {
                 <dt class="required">電話番号</dt>
                 <dd><input type="text" pattern="^[0-9]*$" name="tell" class="info" required></dd>
 
-                <div class="button">
+                <div>
                     <button id="up">送信</button>
                 </div>
             </dl>
@@ -131,7 +147,7 @@ try {
             } else if (count["ng"] === 0) {
                 namealert.style.display = 'none';
                 document.getElementById("up").disabled = false;
-                document.getElementById("up").style.background = "#f0ad4e";
+                document.getElementById("up").style.background = "#3cb371";
             }
         }
 
@@ -162,7 +178,7 @@ try {
             } else if (count["ng"] === 0) {
                 emailalert.style.display = 'none';
                 document.getElementById("up").disabled = false;
-                document.getElementById("up").style.background = "#f0ad4e";
+                document.getElementById("up").style.background = "#3cb371";
             }
 
 

@@ -41,14 +41,30 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/store_input.css">
     <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
     <title>たまりbar</title>
 </head>
 
 <body>
     <header class="store_header">
-        <h1>店舗オーナー様：編集</h1>
-        <p>すべての項目をご記入ください</p>
+        <div class="header__wrapper">
+            <div>
+                <h1>たまりbar</h1>
+                <p>管理者名:<?= $_SESSION['username']; ?></p>
+            </div>
+
+            <ul class="nav__list">
+                <li class="nav-item"><a href="store_logout.php">ログアウトする</a></li>
+                <li class="nav-item"><a href="store_register_edit.php?id=<?= $_SESSION['id']; ?>">ユーザー情報の編集</a></li>
+            </ul>
+
+        </div>
+
     </header>
+
+    <h2>管理者情報の編集</h2>
+
 
     <main>
         <form action="store_register_update.php" method="POST">

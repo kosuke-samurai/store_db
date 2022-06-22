@@ -12,7 +12,7 @@ $location = $_POST["location"];
 $write_data = "{$name},{$old},{$sex},{$opinion},{$location}\n";
 
 //書き込み先のファイルを開く
-$file = fopen("data/opinion.csv","a");
+$file = fopen("data/opinion.csv", "a");
 //他の人が書き込まないようファイルをロックする
 flock($file, LOCK_EX);
 
@@ -26,5 +26,3 @@ fclose($file);
 
 //表示はtodo_txt_input.phpの状態に
 header("Location:thankyou.php");
-
-?>

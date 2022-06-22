@@ -1,8 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@400;500&family=Roboto:wght@100&display=swap');
+
+.tamari_family {
+    font-family: 'Kaisei Decol',
+        serif;
+}
+
 body {
     margin: 0;
+    background-color: #F7F7F7;
 }
 
 header {
+    color: #FFFFFF;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,7 +19,7 @@ header {
     background-size: cover;
     height: 150px;
     text-align: center;
-    background-color: lawngreen;
+    background-color: #3cb371;
 }
 
 .store_header {
@@ -21,12 +30,14 @@ header {
     background-size: cover;
     height: 150px;
     text-align: center;
-    background-color: rgb(231, 0, 252);
+    background-color: #3cb1b3;
 }
 
 main {
+    padding: 20px 0;
     max-width: 960px;
     margin: auto;
+    background-color: #FFFFFF;
 }
 
 footer {
@@ -36,6 +47,9 @@ footer {
 
 h2 {
     text-align: center;
+    font-weight: lighter;
+    font-family: 'Kaisei Decol',
+        serif;
 }
 
 .chartdiv {
@@ -120,7 +134,7 @@ li {
 
 .required::after {
     content: "必須";
-    background-color: #f0ad4e;
+    background-color: #3cb371;
     color: #fff;
     font-size: 12px;
     font-weight: bold;
@@ -135,12 +149,59 @@ li {
     display: inline-block;
 }
 
+.store_required::after {
+    content: "必須";
+    background-color: #3cb1b3;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    min-width: 10px;
+    padding: 3px 7px;
+    margin: 0px 5px;
+    line-height: 1;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-align: center;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+
 .button {
     text-align: center;
+
 }
 
 button {
-    background-color: #f0ad4e;
+    background-color: #3cb371;
+    border: none;
+    color: #fff;
+    font-size: 21px;
+    width: 300px;
+    margin: auto;
+    padding: 19.5px 0;
+    cursor: pointer;
+}
+
+.button {
+    background-color: #3cb371;
+    border: none;
+    color: #fff;
+    font-size: 21px;
+    width: 300px;
+    margin: auto;
+    padding: 19.5px 0;
+    cursor: pointer;
+}
+
+.store_button {
+    text-align: center;
+
+}
+
+
+.store_button {
+    background-color: #3cb1b3;
     border: none;
     color: #fff;
     font-size: 21px;
@@ -162,16 +223,6 @@ button {
 }
 
 
-/*吹き出し
-.tooltip:before {
-    content: '';
-    position: absolute;
-    top: 10px;
-    left: -50px;
-    border: 12px solid transparent;
-    border-right: 12px solid #808080;
-}
-*/
 
 .tooltip {
     position: absolute;
@@ -193,4 +244,37 @@ button {
     padding: 10px;
     margin: 60px 10px 100px 700px;
     display: none;
+}
+
+a:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+}
+
+/*css調整new*/
+
+.header__wrapper {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    align-items: center;
+}
+
+.nav__list {
+    display: flex;
+}
+
+.nav-item {
+    font-size: 21px;
+    margin: 24px;
+}
+
+.nav-item>a {
+    color: #FFFFFF;
+    text-transform: uppercase;
 }

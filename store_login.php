@@ -5,35 +5,56 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
     <link rel="stylesheet" href="css/store_input.css">
     <title>たまりbar</title>
 </head>
 
 <body>
     <header class="store_header">
-        <h1>ログインページ</h1>
-        <p>すべての項目をご記入ください</p>
+        <div class="header__wrapper">
+            <div>
+                <h1 class="tamari_family">たまりbar</h1>
+                <p class="tamari_family">移住者のコミュニティーが生まれる</p>
+                <p>管理者ページ</p>
+            </div>
+
+            <ul class="nav__list">
+                <li class="nav-item">管理者情報でログインしてください</li>
+                <li class="nav-item"><a href="top.php">トップに戻る</a></li>
+            </ul>
+
+        </div>
+
     </header>
 
+
+
+
+
     <main>
+
+        <h2>管理者ログイン</h2>
+
         <form action="store_login_act.php" method="POST">
 
             <input type="text" name="is_admin" value="1">
 
             <dl class="input">
 
-                <dt class="required">ユーザー名</dt>
+                <dt class="store_required">ユーザー名</dt>
                 <dd><input type="text" name="username" class="info" required></dd>
 
-                <dt class="required">パスワード</dt>
+                <dt class="store_required">パスワード</dt>
                 <dd><input type="text" name="password" class="info" required></dd>
 
-                <button>ログイン</button>
+                <button class="store_button">ログイン</button>
                 </div>
             </dl>
 
         </form>
-        <button type=“button” onclick="location.href='store_register_input.php'" class="register_button">新規登録</button>
+        <button type=“button” onclick="location.href='store_register_input.php'" class="store_button input">新規登録</button>
 
 
 
