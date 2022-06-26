@@ -1,7 +1,7 @@
 <?php
 //env利用
-require './vendor/autoload.php';
-Dotenv\Dotenv::createImmutable(__DIR__)->load();
+//require './vendor/autoload.php';
+//Dotenv\Dotenv::createImmutable(__DIR__)->load();
 
 
 session_start();
@@ -200,7 +200,7 @@ check_store_session_id();
     // https://firebase.google.com/docs/web/setup#available-libraries
 
     // Your web app's Firebase configuration
-    const hogeArray = <?= json_encode($_ENV['FIREBASE_KEY']) ?>;
+    const hogeArray = <?= json_encode(getenv('FIREBASE_KEY')) ?>;
 
     const firebaseConfig = {
       apiKey: hogeArray,

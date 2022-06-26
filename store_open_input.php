@@ -1,8 +1,8 @@
 <?php
 
 //env利用
-require './vendor/autoload.php';
-Dotenv\Dotenv::createImmutable(__DIR__)->load();
+//require './vendor/autoload.php';
+//Dotenv\Dotenv::createImmutable(__DIR__)->load();
 
 session_start();
 include('functions.php');
@@ -113,7 +113,7 @@ $store_name = $_GET['store'];
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
 
-        const hogeArray = <?= json_encode($_ENV['FIREBASE_KEY']) ?>;
+        const hogeArray = <?= json_encode(getenv('FIREBASE_KEY')) ?>;
         //console.log(hogeArray);
 
         // Your web app's Firebase configuration
