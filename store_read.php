@@ -7,6 +7,12 @@ check_customer_session_id();
 //var_dump($_SESSION['adress']);
 //var_dump($_SESSION['id']);
 
+//env利用
+require './vendor/autoload.php';
+Dotenv\Dotenv::createImmutable(__DIR__)->load();
+
+//var_dump($_ENV['YAHOO_MAP_KEY']);
+
 
 $pdo = connect_to_db();
 
@@ -52,7 +58,7 @@ for ($i = 0; $i < count($result); $i++) {
   mb_internal_encoding("UTF-8");
 
   $address = $result[$i]["adress"];
-  $apikey = "＜API-KEY＞";
+  $apikey = $_ENV['YAHOO_MAP_KEY'];
   $address = urlencode($address);
   $url = "https://map.yahooapis.jp/geocode/V1/geoCoder?output=json&recursive=true&appid=" . $apikey . "&query=" . $address;
   $contents = file_get_contents($url);
@@ -77,7 +83,7 @@ mb_language("Japanese"); //文字コードの設定
 mb_internal_encoding("UTF-8");
 //住所（梅田スカイビル）を入れて緯度経度を求める。
 $address = $_SESSION['adress'];
-$apikey = "＜API-KEY＞";
+$apikey = $_ENV['YAHOO_MAP_KEY'];
 $address = urlencode($address);
 $url = "https://map.yahooapis.jp/geocode/V1/geoCoder?output=json&recursive=true&appid=" . $apikey . "&query=" . $address;
 $contents = file_get_contents($url);
@@ -180,7 +186,7 @@ $customer_idokeido =  array($lat, $lon);
   </main>
 
 
-  <script src="https://maps.googleapis.com/maps/api/js?key=＜API-KEY＞"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=<?= $_ENV['GOOGLE_MAP_KEY']; ?>"></script>
   <script>
     const idokeido = <?= json_encode($idokeido) ?>;
     console.log(idokeido);

@@ -1,4 +1,9 @@
 <?php
+//env利用
+require './vendor/autoload.php';
+Dotenv\Dotenv::createImmutable(__DIR__)->load();
+
+
 session_start();
 include("functions.php");
 check_store_session_id();
@@ -49,8 +54,8 @@ check_store_session_id();
 
     <form action="store_create.php" method="POST" enctype="multipart/form-data">
 
-      <input type="text" name="filesurl" id="filesurl" value="">
-      <input type="text" name="username" value="<?= $_SESSION['username']; ?>">
+      <input type="hidden" name="filesurl" id="filesurl" value="">
+      <input type="hidden" name="username" value="<?= $_SESSION['username']; ?>">
 
       <dl class="input">
 
@@ -195,8 +200,10 @@ check_store_session_id();
     // https://firebase.google.com/docs/web/setup#available-libraries
 
     // Your web app's Firebase configuration
+    const hogeArray = <?= json_encode($_ENV['FIREBASE_KEY']) ?>;
+
     const firebaseConfig = {
-      apiKey: "AIzaSyCJWrsxqReQ8bMBgyr17wsPysj7lxMtc4g",
+      apiKey: hogeArray,
       authDomain: "graduationprogram-45052.firebaseapp.com",
       projectId: "graduationprogram-45052",
       storageBucket: "graduationprogram-45052.appspot.com",

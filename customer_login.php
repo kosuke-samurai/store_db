@@ -36,7 +36,7 @@
 
         <form action="customer_login_act.php" method="POST">
 
-            <input type="text" name="is_admin" value="0">
+            <input type="hidden" name="is_admin" value="0">
 
             <dl class="input">
 

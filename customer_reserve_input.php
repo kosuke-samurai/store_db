@@ -51,11 +51,11 @@ $store_name = $_GET['store'];
     <main>
         <form action="customer_reserve_create.php" method="POST">
 
-            <input type="text" name="is_admin" value="0">
-            <input type="text" name="is_deleted" value="0">
-            <input type="text" name="username" value="<?= $_SESSION['username']; ?>">
-            <input type="text" name="store_name" value="<?= $store_name; ?>">
-            <input type="date" name="reserve_day" value="<?= $reserve_date; ?>">
+            <input type="hidden" name="is_admin" value="0">
+            <input type="hidden" name="is_deleted" value="0">
+            <input type="hidden" name="username" value="<?= $_SESSION['username']; ?>">
+            <input type="hidden" name="store_name" value="<?= $store_name; ?>">
+            <input type="hidden" name="reserve_day" value="<?= $reserve_date; ?>">
 
             <dl class="input">
 

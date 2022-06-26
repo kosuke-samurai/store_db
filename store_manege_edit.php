@@ -1,4 +1,8 @@
 <?php
+//env利用
+require './vendor/autoload.php';
+Dotenv\Dotenv::createImmutable(__DIR__)->load();
+
 //var_dump($_GET);
 //exit();
 // id受け取り
@@ -76,7 +80,7 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
       <input type="hidden" name="username" class="info" value="<?= $record['username'] ?>">
       <input type="hidden" name="id" value="<?= $record['id'] ?>">
-      <input type="text" name="filesurl" id="filesurl" value="<?= $record['filesurl'] ?>">
+      <input type="hidden" name="filesurl" id="filesurl" value="<?= $record['filesurl'] ?>">
 
       <dl class="input">
         <dt class="store_required">店舗名</dt>
@@ -214,7 +218,7 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Your web app's Firebase configuration
     const firebaseConfig = {
-      apiKey: "＜API-KEY＞",
+      apiKey: "<?= $_ENV['FIREBASE_KEY '] ?>",
       authDomain: "graduationprogram-45052.firebaseapp.com",
       projectId: "graduationprogram-45052",
       storageBucket: "graduationprogram-45052.appspot.com",

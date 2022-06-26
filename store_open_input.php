@@ -1,4 +1,9 @@
 <?php
+
+//env利用
+require './vendor/autoload.php';
+Dotenv\Dotenv::createImmutable(__DIR__)->load();
+
 session_start();
 include('functions.php');
 check_store_session_id();
@@ -7,7 +12,7 @@ check_store_session_id();
 
 $open_day = $_GET["date"];
 $store_name = $_GET['store'];
-//var_dump($reserve_date);
+//var_dump($open_day);
 
 ?>
 
@@ -56,23 +61,23 @@ $store_name = $_GET['store'];
 
         <form action="store_open_create.php" method="POST">
 
-            <input type="text" name="is_admin" value="1">
-            <input type="text" name="is_deleted" value="0">
-            <input type="text" name="item_url" id="item_url" value="">
-            <input type="text" name="username" value="<?= $_SESSION['username'] ?>">
-            <input type="text" name="store_name" value="<?= $store_name ?>">
-            <input type="date" name="open_day" value="<?= $open_day ?>">
+            <input type="hidden" name="is_admin" value="1">
+            <input type="hidden" name="is_deleted" value="0">
+            <input type="hidden" name="item_url" id="item_url" value="">
+            <input type="hidden" name="username" value="<?= $_SESSION['username']; ?>">
+            <input type="hidden" name="store_name" value="<?= $store_name; ?>"><br />
+            <input type="hidden" name="open_day" value="<?= $open_day; ?>">
 
             <dl class="input">
 
                 <dt class="store_required">ユーザー名（管理用）</dt>
-                <dd><?= $_SESSION['username'] ?></dd>
+                <dd><?= $_SESSION['username']; ?></dd>
 
                 <dt class="store_required">店名</dt>
-                <dd><?= $store_name ?></dd>
+                <dd><?= $store_name; ?></dd>
 
                 <dt class="store_required">予約可能日</dt>
-                <dd><?= $open_day ?></dd>
+                <dd><?= $open_day; ?></dd>
 
                 <dt class="store_required">実施時間(目安：2時間)</dt>
                 <dd><input type="text" name="open_hour" class="info" required></dd>
@@ -108,9 +113,12 @@ $store_name = $_GET['store'];
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
 
+        const hogeArray = <?= json_encode($_ENV['FIREBASE_KEY']) ?>;
+        //console.log(hogeArray);
+
         // Your web app's Firebase configuration
         const firebaseConfig = {
-            apiKey: "＜API-KEY＞",
+            apiKey: hogeArray,
             authDomain: "graduationprogram-45052.firebaseapp.com",
             projectId: "graduationprogram-45052",
             storageBucket: "graduationprogram-45052.appspot.com",

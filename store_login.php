@@ -39,7 +39,7 @@
 
         <form action="store_login_act.php" method="POST">
 
-            <input type="text" name="is_admin" value="1">
+            <input type="hidden" name="is_admin" value="1">
 
             <dl class="input">
 

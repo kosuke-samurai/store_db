@@ -77,8 +77,8 @@ try {
 
         <form action="store_register_create.php" method="POST">
 
-            <input type="text" name="is_admin" value="1">
-            <input type="text" name="is_deleted" value="0">
+            <input type="hidden" name="is_admin" value="1">
+            <input type="hidden" name="is_deleted" value="0">
 
             <dl class="input">
 

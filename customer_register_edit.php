@@ -69,8 +69,8 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
         <h2>ユーザー情報の編集</h2>
         <form action="customer_register_update.php" method="POST">
 
-            <input type="text" name="is_admin" value="<?= $record['is_admin'] ?>">
-            <input type="text" name="is_deleted" value="<?= $record['is_deleted'] ?>">
+            <input type="hidden" name="is_admin" value="<?= $record['is_admin'] ?>">
+            <input type="hidden" name="is_deleted" value="<?= $record['is_deleted'] ?>">
 
 
             <dl class="input">

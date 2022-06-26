@@ -39,10 +39,11 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/store_input.css">
+
     <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="css/store_input.css">
     <title>たまりbar</title>
 </head>
 
@@ -50,18 +51,21 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
     <header class="store_header">
         <div class="header__wrapper">
             <div>
-                <h1>たまりbar</h1>
-                <p>管理者名:<?= $_SESSION['username']; ?></p>
+                <h1 class="tamari_family">たまりbar</h1>
+                <p class="tamari_family">移住者のコミュニティーが生まれる</p>
+                <p>管理者ページ</p>
             </div>
 
             <ul class="nav__list">
-                <li class="nav-item"><a href="store_logout.php">ログアウトする</a></li>
-                <li class="nav-item"><a href="store_register_edit.php?id=<?= $_SESSION['id']; ?>">ユーザー情報の編集</a></li>
+                <li class="nav-item"><a href="store_manege.php">管理者ページに戻る</a></li>
+                <li class="nav-item"><a href="top.php">トップに戻る</a></li>
+
             </ul>
 
         </div>
 
     </header>
+
 
     <h2>管理者情報の編集</h2>
 
@@ -69,37 +73,39 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
     <main>
         <form action="store_register_update.php" method="POST">
 
-            <input type="text" name="is_admin" value="<?= $record['is_admin'] ?>">
-            <input type="text" name="is_deleted" value="<?= $record['is_deleted'] ?>">
+            <input type="hidden" name="is_admin" value="<?= $record['is_admin'] ?>">
+            <input type="hidden" name="is_deleted" value="<?= $record['is_deleted'] ?>">
 
             <dl class="input">
 
-                <dt class="required">ユーザー名（管理用）</dt>
+                <dt class="store_required">ユーザー名（管理用）</dt>
                 <dd>ユーザー名は変更できません</dd>
 
-                <dt class="required">パスワード</dt>
+                <dt class="store_required">パスワード</dt>
                 <dd>パスワードは変更できません</dd>
 
-                <dt class="required">メールアドレス</dt>
+                <dt class="store_required">メールアドレス</dt>
                 <dd><input type="text" name="email" class="info" value="<?= $record['email'] ?>" required></dd>
 
-                <dt class="required">郵便番号（7桁ハイフンなし）</dt>
+                <dt class="store_required">郵便番号（7桁ハイフンなし）</dt>
                 <dd><input type="text" pattern="^[0-9]*$" name="postadress" class="info" value="<?= $record['postadress'] ?>" required maxlength="8" onKeyUp="AjaxZip3.zip2addr(this,'','adress','adress');"></dd>
 
-                <dt class="required">住所</dt>
+                <dt class="store_required">住所</dt>
                 <dd><input type="text" name="adress" class="info" value="<?= $record['adress'] ?>" required></dd>
 
-                <dt class="required">電話番号</dt>
+                <dt class="store_required">電話番号</dt>
                 <dd><input type="text" pattern="^[0-9]*$" name="tell" class="info" value="<?= $record['tell'] ?>" required></dd>
 
-                <div class="button">
-                    <button id="up">情報を更新する</button>
+
+                <div>
+                    <button id="up" class="store_button">情報を更新する</button>
                 </div>
+
             </dl>
         </form>
         <div class="store_manege_make">
-            <div>
-                <a href='store_register_delete.php?id=<?= $_SESSION['id']; ?>' onclick="return confirm('削除したデータは復元できません。本当に削除しますか？')" class="register_button">ユーザー情報を削除する</a>
+            <div class="store_button">
+                <a href='store_register_delete.php?id=<?= $_SESSION['id']; ?>' onclick="return confirm('削除したデータは復元できません。本当に削除しますか？')" class="store_button">ユーザー情報を削除する</a>
             </div>
         </div>
 
