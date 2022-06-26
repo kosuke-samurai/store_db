@@ -1,7 +1,7 @@
 <?php
 //env利用
-require './vendor/autoload.php';
-Dotenv\Dotenv::createImmutable(__DIR__)->load();
+//require './vendor/autoload.php';
+//Dotenv\Dotenv::createImmutable(__DIR__)->load();
 
 //session_start();
 //include("functions.php");
