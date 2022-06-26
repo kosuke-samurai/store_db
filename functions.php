@@ -1,6 +1,6 @@
 <?php
 
-/*
+
 function connect_to_db()
 {
   $db = parse_url($_SERVER['CLEARDB_DATABASE_URL']);
@@ -16,10 +16,10 @@ function connect_to_db()
   $dbh = new PDO($dsn, $user, $password, $options);
   return $dbh;
 }
-*/
 
 
 
+/*
 function connect_to_db()
 {
   $dbn = 'mysql:dbname=gs_graduation_program;charset=utf8mb4;port=3306;host=localhost';
@@ -34,6 +34,7 @@ function connect_to_db()
     exit();
   }
 }
+*/
 
 
 function check_store_session_id()
