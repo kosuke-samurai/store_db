@@ -8,16 +8,14 @@ check_customer_session_id();
 //var_dump($_SESSION['id']);
 
 //env利用
-require './vendor/autoload.php';
-Dotenv\Dotenv::createImmutable(__DIR__)->load();
+//require './vendor/autoload.php';
+//Dotenv\Dotenv::createImmutable(__DIR__)->load();
 
 //var_dump($_ENV['YAHOO_MAP_KEY']);
 
 
 $pdo = connect_to_db();
 
-$YAHOO_MAP_KEY = getenv('YAHOO_MAP_KEY');
-var_dump($YAHOO_MAP_KEY);
 
 // SQL作成&実行
 
