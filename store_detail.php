@@ -56,7 +56,7 @@ $lat = $geo[1];
 
             <ul class="nav__list">
                 <li class="nav-item"><a href="store_read.php">店舗一覧に戻る</a></li>
-                <li class="nav-item"><a href="top.php">トップに戻る</a></li>
+                <li class="nav-item"><a href="index.php">トップに戻る</a></li>
                 <li class="nav-item"><a href="customer_logout.php">ログアウトする</a></li>
                 <li class="nav-item"><a href="customer_register_edit.php?id=<?= $_SESSION['id']; ?>">ユーザー情報の編集</a></li>
             </ul>

@@ -22,7 +22,7 @@
 
             <ul class="nav__list">
                 <li class="nav-item">管理者情報でログインしてください</li>
-                <li class="nav-item"><a href="top.php">トップに戻る</a></li>
+                <li class="nav-item"><a href="index.php">トップに戻る</a></li>
             </ul>
 
         </div>

@@ -61,7 +61,7 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
       <ul class="nav__list">
         <li class="nav-item"><a href="store_manege.php">管理者ページに戻る</a></li>
-        <li class="nav-item"><a href="top.php">トップに戻る</a></li>
+        <li class="nav-item"><a href="index.php">トップに戻る</a></li>
         <li class="nav-item"><a href="store_logout.php">ログアウトする</a></li>
         <li class="nav-item"><a href="store_register_edit.php?id=<?= $_SESSION['id']; ?>">ユーザー情報の編集</a></li>
       </ul>

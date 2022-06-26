@@ -60,7 +60,7 @@ try {
 
             <ul class="nav__list">
                 <li class="nav-item">オーナーさま管理者ページを作成します</li>
-                <li class="nav-item"><a href="top.php">トップに戻る</a></li>
+                <li class="nav-item"><a href="index.php">トップに戻る</a></li>
 
             </ul>
 

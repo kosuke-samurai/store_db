@@ -20,7 +20,7 @@
             </div>
 
             <ul class="nav__list">
-                <li class="nav-item"><a href="top.php">トップに戻る</a></li>
+                <li class="nav-item"><a href="index.php">トップに戻る</a></li>
                 <li class="nav-item"><a href="customer_register_input.php">新規登録はこちら</a></li>
             </ul>
 

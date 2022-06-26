@@ -57,7 +57,7 @@ try {
             </div>
 
             <ul class="nav__list">
-                <li class="nav-item"><a href="top.php">トップに戻る</a></li>
+                <li class="nav-item"><a href="index.php">トップに戻る</a></li>
                 <li class="nav-item"><a href="customer_login.php">ログイン</a></li>
             </ul>
 
