@@ -7,11 +7,11 @@ Dotenv\Dotenv::createImmutable(__DIR__)->load();
 //include("functions.php");
 //check_customer_session_id();
 
-mb_language("Japanese"); //文字コードの設定
-mb_internal_encoding("UTF-8");
+//mb_language("Japanese"); //文字コードの設定
+//mb_internal_encoding("UTF-8");
 
 $address = $detail["adress"];
-$apikey = $_ENV['YAHOO_MAP_KEY'];
+$apikey = getenv('YAHOO_MAP_KEY');
 $address = urlencode($address);
 $url = "https://map.yahooapis.jp/geocode/V1/geoCoder?output=json&recursive=true&appid=" . $apikey . "&query=" . $address;
 $contents = file_get_contents($url);
@@ -120,7 +120,7 @@ $lat = $geo[1];
     </main>
 
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=<?= $_ENV['GOOGLE_MAP_KEY']; ?>"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<?= getenv('GOOGLE_MAP_KEY'); ?>"></script>
     <script>
         const keido = <?= json_encode($lon) ?>;
         console.log(keido);
