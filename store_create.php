@@ -56,18 +56,20 @@ $adress = $_POST["adress"];
 $tell = $_POST["tell"];
 
 // DB接続 ※基本変えない。
+$pdo = connect_to_db();
+
 // 各種項目設定 ※基本変えない。dbnameを変えるだけ
-$dbn = 'mysql:dbname=gs_graduation_program;charset=utf8mb4;port=3306;host=localhost';
-$user = 'root';
-$pwd = '';
+//$dbn = 'mysql:dbname=gs_graduation_program;charset=utf8mb4;port=3306;host=localhost';
+//$user = 'root';
+//$pwd = '';
 
 
-try {
-  $pdo = new PDO($dbn, $user, $pwd);
-} catch (PDOException $e) {
-  echo json_encode(["db error" => "{$e->getMessage()}"]);
-  exit();
-}
+//try {
+//  $pdo = new PDO($dbn, $user, $pwd);
+//} catch (PDOException $e) {
+// echo json_encode(["db error" => "{$e->getMessage()}"]);
+// exit();
+//}
 // （「dbError:...」が表示されたらdb接続でエラーが発生していることがわかる）
 
 // ★SQL作成&実行★ ※基本変えない。$sql以下記載のコードはphpmyadminで実行できるのを確認してからそれをコピペ
