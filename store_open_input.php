@@ -113,7 +113,7 @@ $store_name = $_GET['store'];
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
 
-        const hogeArray = <?= json_encode(getenv('FIREBASE_KEY')) ?>;
+
         //console.log(hogeArray);
 
         // Your web app's Firebase configuration
