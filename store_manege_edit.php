@@ -219,7 +219,7 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Your web app's Firebase configuration
     const firebaseConfig = {
-      apiKey: hogeArray,
+      apiKey: "",
       authDomain: "graduationprogram-45052.firebaseapp.com",
       projectId: "graduationprogram-45052",
       storageBucket: "graduationprogram-45052.appspot.com",

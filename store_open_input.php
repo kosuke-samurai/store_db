@@ -118,7 +118,7 @@ $store_name = $_GET['store'];
 
         // Your web app's Firebase configuration
         const firebaseConfig = {
-            apiKey: hogeArray,
+            apiKey: "",
             authDomain: "graduationprogram-45052.firebaseapp.com",
             projectId: "graduationprogram-45052",
             storageBucket: "graduationprogram-45052.appspot.com",

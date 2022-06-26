@@ -203,7 +203,7 @@ check_store_session_id();
     const hogeArray = <?= json_encode(getenv('FIREBASE_KEY')) ?>;
 
     const firebaseConfig = {
-      apiKey: hogeArray,
+      apiKey: "",
       authDomain: "graduationprogram-45052.firebaseapp.com",
       projectId: "graduationprogram-45052",
       storageBucket: "graduationprogram-45052.appspot.com",
