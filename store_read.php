@@ -79,8 +79,9 @@ for ($i = 0; $i < count($result); $i++) {
 
 //お客の緯度経度抽出※
 
-mb_language("Japanese"); //文字コードの設定
-mb_internal_encoding("UTF-8");
+//mb_language("Japanese"); //文字コードの設定
+//mb_internal_encoding("UTF-8");
+
 //住所（梅田スカイビル）を入れて緯度経度を求める。
 $address = $_SESSION['adress'];
 $apikey = getenv('YAHOO_MAP_KEY');
