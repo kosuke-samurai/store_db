@@ -54,8 +54,8 @@ $idokeido = [];
 
 for ($i = 0; $i < count($result); $i++) {
 
-  mb_language("Japanese"); //文字コードの設定
-  mb_internal_encoding("UTF-8");
+  //mb_language("Japanese"); //文字コードの設定
+  //mb_internal_encoding("UTF-8");
 
   $address = $result[$i]["adress"];
   $apikey = getenv('YAHOO_MAP_KEY');
