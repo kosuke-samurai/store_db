@@ -1,7 +1,7 @@
 <?php
 //env利用
-require './vendor/autoload.php';
-Dotenv\Dotenv::createImmutable(__DIR__)->load();
+//require './vendor/autoload.php';
+//Dotenv\Dotenv::createImmutable(__DIR__)->load();
 
 //var_dump($_GET);
 //exit();
@@ -215,10 +215,11 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
     //import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
+    const hogeArray = <?= json_encode(getenv('FIREBASE_KEY')) ?>;
 
     // Your web app's Firebase configuration
     const firebaseConfig = {
-      apiKey: "<?= $_ENV['FIREBASE_KEY '] ?>",
+      apiKey: hogeArray,
       authDomain: "graduationprogram-45052.firebaseapp.com",
       projectId: "graduationprogram-45052",
       storageBucket: "graduationprogram-45052.appspot.com",
