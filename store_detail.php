@@ -120,7 +120,7 @@ $lat = $geo[1];
     </main>
 
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=<?= getenv('GOOGLE_MAP_KEY'); ?>"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=＜API-KEY＞"></script>
     <script>
         const keido = <?= json_encode($lon) ?>;
         console.log(keido);
