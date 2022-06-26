@@ -16,6 +16,8 @@ Dotenv\Dotenv::createImmutable(__DIR__)->load();
 
 $pdo = connect_to_db();
 
+$YAHOO_MAP_KEY = getenv('YAHOO_MAP_KEY');
+var_dump($YAHOO_MAP_KEY);
 
 // SQL作成&実行
 
