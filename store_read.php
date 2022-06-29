@@ -187,7 +187,7 @@ $customer_idokeido =  array($lat, $lon);
   </main>
 
 
-  <script src="https://maps.googleapis.com/maps/api/js?key=＜API-KEY＞"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=<?= getenv('GOOGLE_MAP_KEY'); ?>"></script>
   <script>
     const idokeido = <?= json_encode($idokeido) ?>;
     console.log(idokeido);

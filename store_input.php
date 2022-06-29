@@ -200,10 +200,10 @@ check_store_session_id();
     // https://firebase.google.com/docs/web/setup#available-libraries
 
     // Your web app's Firebase configuration
-
+    const hogeArray = <?= getenv('FIREBASE_KEY'); ?>;
 
     const firebaseConfig = {
-      apiKey: "",
+      apiKey: hogeArray,
       authDomain: "graduationprogram-45052.firebaseapp.com",
       projectId: "graduationprogram-45052",
       storageBucket: "graduationprogram-45052.appspot.com",
