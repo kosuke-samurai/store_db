@@ -20,6 +20,8 @@ $store_name = $_GET['store'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+    <link rel="icon" href="img/favicon.ico"> <!-- ファビコンを設定 -->
+    <link rel="apple-touch-icon" sizes="180x180" href="img/favicon.ico"> <!-- アップルタッチアイコンも設定 -->
     <link rel="stylesheet" href="css/store_input.css">
     <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
     <title>たまりbar</title>
