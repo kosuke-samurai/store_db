@@ -200,7 +200,7 @@ check_store_session_id();
     // https://firebase.google.com/docs/web/setup#available-libraries
 
     // Your web app's Firebase configuration
-    const hogeArray = <?= getenv('FIREBASE_KEY'); ?>;
+    const hogeArray = <?= json_encode(getenv('FIREBASE_KEY')); ?>;
 
     const firebaseConfig = {
       apiKey: hogeArray,

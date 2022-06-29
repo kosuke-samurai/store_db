@@ -215,7 +215,7 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
     //import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
-    const hogeArray = <?= getenv('FIREBASE_KEY'); ?>;
+    const hogeArray = <?= json_encode(getenv('FIREBASE_KEY')); ?>;
 
     // Your web app's Firebase configuration
     const firebaseConfig = {
