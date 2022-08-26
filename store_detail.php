@@ -11,7 +11,7 @@
 //mb_internal_encoding("UTF-8");
 
 $address = "{$detail["prefectures"]}{$detail["adress"]}";
-$apikey = "dj00aiZpPTRFcTZhNWVRRmZGTyZzPWNvbnN1bWVyc2VjcmV0Jng9NzU-";
+$apikey = getenv('YAHOO_MAP_KEY');
 $address = urlencode($address);
 $url = "https://map.yahooapis.jp/geocode/V1/geoCoder?output=json&recursive=true&appid=" . $apikey . "&query=" . $address;
 $contents = file_get_contents($url);

@@ -6,7 +6,7 @@ $id = (int)$_GET["id"];
 $date = $_GET["date"];
 
 require_once('vendor/autoload.php');
-\Stripe\Stripe::setApiKey('sk_test_51LRFA1AYLwjaAQ1eJH97aZr6tQElNpr7uqgwasHuTxm2dulB13GODQWVvpcZa8xnIqNUQ7G3el4kH6fPDqxuQIKP00htOSAycJ');
+\Stripe\Stripe::setApiKey(getenv('STRIPE_KEY'));
 
 $session = \Stripe\Checkout\Session::create([
     'payment_method_types' => ['card'],

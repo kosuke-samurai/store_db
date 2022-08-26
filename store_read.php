@@ -58,7 +58,7 @@ for ($i = 0; $i < count($result); $i++) {
   //mb_internal_encoding("UTF-8");
 
   $address = "{$result[$i]["prefectures"]}{$result[$i]["adress"]}";
-  $apikey = "dj00aiZpPTRFcTZhNWVRRmZGTyZzPWNvbnN1bWVyc2VjcmV0Jng9NzU-";
+  $apikey = getenv('YAHOO_MAP_KEY');
   $address = urlencode($address);
   $url = "https://map.yahooapis.jp/geocode/V1/geoCoder?output=json&recursive=true&appid=" . $apikey . "&query=" . $address;
   $contents = file_get_contents($url);
@@ -84,7 +84,7 @@ for ($i = 0; $i < count($result); $i++) {
 
 //住所（梅田スカイビル）を入れて緯度経度を求める。
 $address = "{$_SESSION['prefectures']}{$_SESSION['adress']}";
-$apikey = "dj00aiZpPTRFcTZhNWVRRmZGTyZzPWNvbnN1bWVyc2VjcmV0Jng9NzU-";
+$apikey = getenv('YAHOO_MAP_KEY');
 $address = urlencode($address);
 $url = "https://map.yahooapis.jp/geocode/V1/geoCoder?output=json&recursive=true&appid=" . $apikey . "&query=" . $address;
 $contents = file_get_contents($url);
