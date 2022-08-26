@@ -22,7 +22,7 @@ $pdo = connect_to_db();
 
 // SQL実行
 
-$sql = 'SELECT * FROM users_table WHERE username=:username AND is_admin=:is_admin AND is_deleted=0';
+$sql = 'SELECT * FROM owner_table WHERE username=:username AND is_admin=:is_admin AND is_deleted=0';
 
 
 $stmt = $pdo->prepare($sql);
@@ -47,7 +47,7 @@ if (!$val) {
 } else if (password_verify($_POST['password'], $val['password']) && $val['is_admin'] === 1) {
     $_SESSION = array();
     $_SESSION['session_id'] = session_id();
-    $_SESSION['id'] = $val['id'];
+    $_SESSION['user_id'] = $val['owner_id'];
     $_SESSION['is_admin'] = $val['is_admin'];
     $_SESSION['username'] = $val['username'];
     $_SESSION['adress'] = $val['adress'];
@@ -56,7 +56,7 @@ if (!$val) {
 } else if (password_verify($_POST['password'], $val['password']) && $val['is_admin'] === 0) {
     $_SESSION = array();
     $_SESSION['session_id'] = session_id();
-    $_SESSION['id'] = $val['id'];
+    $_SESSION['user_id'] = $val['id'];
     $_SESSION['is_admin'] = $val['is_admin'];
     $_SESSION['username'] = $val['username'];
     $_SESSION['adress'] = $val['adress'];

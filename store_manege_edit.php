@@ -64,7 +64,7 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
         <li class="nav-item"><a href="store_manege.php">管理者ページに戻る</a></li>
         <li class="nav-item"><a href="index.php">トップに戻る</a></li>
         <li class="nav-item"><a href="store_logout.php">ログアウトする</a></li>
-        <li class="nav-item"><a href="store_register_edit.php?id=<?= $_SESSION['id']; ?>">ユーザー情報の編集</a></li>
+        <li class="nav-item"><a href="store_register_edit.php?id=<?= $_SESSION['user_id']; ?>">ユーザー情報の編集</a></li>
       </ul>
 
     </div>
@@ -79,9 +79,8 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
 
     <form action="store_manege_update.php" method="POST" enctype="multipart/form-data">
 
-      <input type="hidden" name="username" class="info" value="<?= $record['username'] ?>">
-      <input type="hidden" name="id" value="<?= $record['id'] ?>">
-      <input type="hidden" name="filesurl" id="filesurl" value="<?= $record['filesurl'] ?>">
+      <input type="text" name="filesurl" id="filesurl" value="">
+      <input type="text" name="user_id" value="<?= $_SESSION['user_id']; ?>">
 
       <dl class="input">
         <dt class="store_required">店舗名</dt>

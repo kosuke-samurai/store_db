@@ -44,77 +44,204 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="img/favicon.ico"> <!-- ファビコンを設定 -->
     <link rel="apple-touch-icon" sizes="180x180" href="img/favicon.ico"> <!-- アップルタッチアイコンも設定 -->
-    <link rel="stylesheet" href="css/store_input.css">
+
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display+SC:400,700,900&amp;subset=latin-ext" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/animate.css">
+    <link rel="stylesheet" type="text/css" href="css/fontawesome-all.min.css">
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <!-- <link rel="stylesheet" href="css/store_input.css"> -->
     <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
     <title>たまりbar</title>
 </head>
 
 <body>
     <header>
-        <div class="header__wrapper">
-            <div class="tamari_family">
-                <h1>たまりbar</h1>
-                <p>移住者のコミュニティーが生まれる</p>
-            </div>
+        <div class="container d-none d-sm-block logo" style="text-align: center;">
+            <img class="img-fluid" src="images/logos/tamaribar_pc_logo.png" alt="">
+        </div>
 
-            <ul class="nav__list">
-                <li class="nav-item"><a href="index.php">トップに戻る</a></li>
-                <li class="nav-item"><a href="customer_login.php">ログイン</a></li>
-            </ul>
-
+        <div class="container my-2 my-md-4">
+            <nav class="navbar navbar-expand-sm navbar-light">
+                <a class="navbar-brand d-sm-none" href="index.php"><img class="img-fluid" src="images/logos/tamaribar_logo.png" alt=""></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse justify-content-sm-center" id="main-navbar">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php">トップに戻る</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="customer_login.php">ログイン</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </div>
     </header>
 
 
 
-    <main>
 
-        <h2>すべての項目を記入して新規登録</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-12">
+                <article class="content">
+                    <section class="mb-5">
+                        <h2 class="py-2">ユーザー情報を登録する</h2>
 
-        <form action="customer_register_create.php" method="POST">
+                        <form action="customer_register_create.php" method="POST" class="form-horizontal">
 
-            <input type="hidden" name="is_admin" value="0">
-            <input type="hidden" name="is_deleted" value="0">
-
-            <dl class="input">
-
-                <dt class="required">ユーザー名</dt>
-                <dd><input type="text" name="username" id="username" onchange="inputName(this)" class="info" required></dd>
-
-                <div class="tooltip" id="namealert">すでに登録されているため使えません</div>
+                            <input type="hidden" name="is_premier" value="無料プラン">
+                            <input type="hidden" name="is_admin" value="0">
+                            <input type="hidden" name="is_deleted" value="0">
 
 
-                <dt class="required">メールアドレス</dt>
-                <dd><input type="email" name="email" id="email" onchange="inputMail(this)" class="info" required></dd>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">ユーザー名</label>
+                                <div class="col-sm-10 animated-form-control z-index">
+                                    <input type="text" name="username" id="username" onchange="inputName(this)" class="info text form-control" required>
+                                    <div class="tooltip2" id="namealert">すでに登録されているため使えません</div>
+                                </div>
+                            </div>
 
-                <div class="tooltip2" id="emailalert">すでに登録されているため使えません</div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">メール</label>
+                                <div class="col-sm-10 animated-form-control">
+                                    <input type="email" name="email" id="email" onchange="inputMail(this)" class="info text form-control" required>
+                                    <div class="tooltip2" id="emailalert">すでに登録されているため使えません</div>
+                                </div>
+                            </div>
 
-                <dt class="required">パスワード</dt>
-                <dd><input type="text" name="password" class="info" required></dd>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">パスワード</label>
+                                <div class="col-sm-10 animated-form-control">
+                                    <input type="text" name="password" class="info text form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">郵便番号（ハイフンなし）</label>
+                                <div class="col-sm-10 animated-form-control">
+                                    <input type="text" pattern="^[0-9]*$" name="postadress" class="info text form-control" required maxlength="8" onKeyUp="AjaxZip3.zip2addr(this,'','prefectures','adress');">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">都道府県</label>
+                                <div class="col-sm-10 animated-form-control">
+                                    <select name="prefectures" class="info text form-control">
+                                        <option value="" selected>都道府県</option>
+                                        <option value="北海道">北海道</option>
+                                        <option value="青森県">青森県</option>
+                                        <option value="岩手県">岩手県</option>
+                                        <option value="宮城県">宮城県</option>
+                                        <option value="秋田県">秋田県</option>
+                                        <option value="山形県">山形県</option>
+                                        <option value="福島県">福島県</option>
+                                        <option value="茨城県">茨城県</option>
+                                        <option value="栃木県">栃木県</option>
+                                        <option value="群馬県">群馬県</option>
+                                        <option value="埼玉県">埼玉県</option>
+                                        <option value="千葉県">千葉県</option>
+                                        <option value="東京都">東京都</option>
+                                        <option value="神奈川県">神奈川県</option>
+                                        <option value="新潟県">新潟県</option>
+                                        <option value="富山県">富山県</option>
+                                        <option value="石川県">石川県</option>
+                                        <option value="福井県">福井県</option>
+                                        <option value="山梨県">山梨県</option>
+                                        <option value="長野県">長野県</option>
+                                        <option value="岐阜県">岐阜県</option>
+                                        <option value="静岡県">静岡県</option>
+                                        <option value="愛知県">愛知県</option>
+                                        <option value="三重県">三重県</option>
+                                        <option value="滋賀県">滋賀県</option>
+                                        <option value="京都府">京都府</option>
+                                        <option value="大阪府">大阪府</option>
+                                        <option value="兵庫県">兵庫県</option>
+                                        <option value="奈良県">奈良県</option>
+                                        <option value="和歌山県">和歌山県</option>
+                                        <option value="鳥取県">鳥取県</option>
+                                        <option value="島根県">島根県</option>
+                                        <option value="岡山県">岡山県</option>
+                                        <option value="広島県">広島県</option>
+                                        <option value="山口県">山口県</option>
+                                        <option value="徳島県">徳島県</option>
+                                        <option value="香川県">香川県</option>
+                                        <option value="愛媛県">愛媛県</option>
+                                        <option value="高知県">高知県</option>
+                                        <option value="福岡県">福岡県</option>
+                                        <option value="佐賀県">佐賀県</option>
+                                        <option value="長崎県">長崎県</option>
+                                        <option value="熊本県">熊本県</option>
+                                        <option value="大分県">大分県</option>
+                                        <option value="宮崎県">宮崎県</option>
+                                        <option value="鹿児島県">鹿児島県</option>
+                                        <option value="沖縄県">沖縄県</option>
+                                    </select>
+                                </div>
+                            </div>
 
 
-                <dt class="required">郵便番号（7桁ハイフンなし）</dt>
-                <dd><input type="text" pattern="^[0-9]*$" name="postadress" class="info" required maxlength="8" onKeyUp="AjaxZip3.zip2addr(this,'','adress','adress');"></dd>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">以降の住所</label>
+                                <div class="col-sm-10 animated-form-control">
+                                    <input type="text" name="adress" class="info text form-control" required>
+                                </div>
+                            </div>
 
-                <dt class="required">住所</dt>
-                <dd><input type="text" name="adress" class="info" required></dd>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">電話番号</label>
+                                <div class="col-sm-10 animated-form-control">
+                                    <input type="text" pattern="^[0-9]*$" name="tell" class="info text form-control" required>
+                                </div>
+                            </div>
 
-                <dt class="required">電話番号</dt>
-                <dd><input type="text" pattern="^[0-9]*$" name="tell" class="info" required></dd>
 
-                <div>
-                    <button id="up">送信</button>
+
+                            <div class="opening-button ">
+                                <button id="up" class="btn btn-primary float-right">送信</button>
+                            </div>
+
+
+
+
+                        </form>
+                    </section>
+
+                </article>
+            </div>
+        </div>
+    </div>
+
+    <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="divider"></div>
+                    <div class="text-center">
+                        <a href="index.html"><img src="images/logos/tamaribar_logo.png" alt="" class="logo"></a>
+                    </div>
                 </div>
-            </dl>
+            </div>
+            <div class="col-sm-3">
+                <p>© タカハシ</p>
+            </div>
+        </div>
+        </div>
+    </footer>
 
 
-
-        </form>
-
-    </main>
-    <footer>@高橋</footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="javascript/acos.jquery.js"></script>
+    <script src="javascript/script.js"></script>
+
     <script>
         const hogeArray = <?= json_encode($username) ?>;
         console.log(hogeArray);

@@ -31,7 +31,7 @@ try {
     //exit();
 
     for ($i = 0; $i < count($result); $i++) {
-        if ($result[$i]["username"] === $_SESSION['username']) {
+        if ($result[$i]["user_id"] === $_SESSION['user_id']) {
             $hoge_array[] = array($result[$i]["id"]);
         }
     }
@@ -45,8 +45,6 @@ try {
     echo json_encode(["sql error" => "{$e->getMessage()}"]);
     //exit();
 }
-
-
 
 
 ?>
@@ -79,7 +77,7 @@ try {
                 <li class="nav-item"><a href="store_input.php">店舗を登録する</a></li>
                 <li class="nav-item"><a href="index.php">トップに戻る</a></li>
                 <li class="nav-item"><a href="store_logout.php">ログアウトする</a></li>
-                <li class="nav-item"><a href="store_register_edit.php?id=<?= $_SESSION['id']; ?>">ユーザー情報の編集</a></li>
+                <li class="nav-item"><a href="store_register_edit.php?id=<?= $_SESSION['user_id']; ?>">ユーザー情報の編集</a></li>
             </ul>
 
         </div>
@@ -96,12 +94,12 @@ try {
 
         <ul class="storelist">
             <?php for ($i = 0; $i < count($result); $i++) : ?>
-                <?php if ($result[$i]["username"] === $_SESSION['username']) : ?>
+                <?php if ($result[$i]["user_id"] === $_SESSION['user_id']) : ?>
 
 
                     <li class="box">
                         <h2><?= $result[$i]["name"]; ?> </h2>
-                        <a href='store_calendar.php?store=<?php echo $result[$i]['name']; ?>' class="">実施日の登録</a>
+                        <a href='store_calendar.php?id=<?php echo $result[$i]['id']; ?>' class="">実施日の登録</a>
                         <a href='store_manege_edit.php?id=<?php echo $result[$i]['id']; ?>' class="">編集する</a>
                         <a href='store_manege_delete.php?id=<?php echo $result[$i]['id']; ?>' onclick="return confirm('削除したデータは復元できません。本当に削除しますか？')" class="">削除</a>
                     </li>

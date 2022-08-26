@@ -1,20 +1,20 @@
 <?php
 session_start();
 include("functions.php");
-check_customer_session_id();
+check_premier_customer_session_id();
 
 //var_dump($_GET);
-$store_name = $_GET['store'];
+$store_id = (int)$_GET['id'];
 //var_dump($store_name);
 //exit();
 
-//カレンダーの情報取得
+//満席情報
 function getreservation()
 {
     $pdo = connect_to_db();
 
     //$sql = "SELECT * FROM reserve_table";
-    $sql = "SELECT * FROM reserve_table LEFT OUTER JOIN store_reserve_table ON reserve_table.reserve_day = store_reserve_table.open_day";
+    $sql = "SELECT event_id, customer_number, store_id, reserve_day, open_day, start_hour, close_hour, COUNT(is_reserve) AS reserve_count FROM (SELECT event_id, customer_number, reserve_table.store_id, reserve_day, is_reserve, open_day, start_hour, close_hour FROM reserve_table LEFT OUTER JOIN store_reserve_table ON reserve_table.reserve_day = store_reserve_table.open_day AND reserve_table.store_id = store_reserve_table.store_id) AS reserve_record_table GROUP BY event_id";
 
     $stmt = $pdo->prepare($sql);
 
@@ -22,12 +22,12 @@ function getreservation()
         $status = $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $store_name = $_GET['store'];
+        $store_id = (int)$_GET['id'];
         $reservation_member = array();
 
         foreach ($result as $record) {
 
-            if ($record["store_name"] === $store_name) {
+            if ($record["store_id"] === $store_id && $record["customer_number"] <= $record["reserve_count"]) {
                 //var_dump($store_name);
 
                 $day_out = strtotime((string)$record['reserve_day']);
@@ -46,7 +46,45 @@ function getreservation()
     }
 }
 
-//new!
+
+//あと2席で満席情報
+function getreservationlately()
+{
+    $pdo = connect_to_db();
+
+    //$sql = "SELECT * FROM reserve_table";
+    $sql = "SELECT event_id, customer_number, store_id, reserve_day, open_day, start_hour, close_hour, COUNT(is_reserve) AS reserve_count FROM (SELECT event_id, customer_number, reserve_table.store_id, reserve_day, is_reserve, open_day, start_hour, close_hour FROM reserve_table LEFT OUTER JOIN store_reserve_table ON reserve_table.reserve_day = store_reserve_table.open_day AND reserve_table.store_id = store_reserve_table.store_id) AS reserve_record_table GROUP BY event_id";
+
+    $stmt = $pdo->prepare($sql);
+
+    try {
+        $status = $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $store_id = (int)$_GET['id'];
+        $reservation_member = array();
+
+        foreach ($result as $record) {
+
+            if ($record["store_id"] === $store_id && $record["customer_number"] > $record["reserve_count"] && $record["customer_number"] - $record["reserve_count"] <= 2) {
+                //var_dump($store_name);
+
+                $open_out = strtotime((string)$record['open_day']);
+                //var_dump($open_out);
+
+                $hour_out = "{$record['start_hour']}~{$record['close_hour']}";
+
+                $reservation_member[date('Y-m-d', $open_out)] = $hour_out;
+            }
+        }
+        ksort($reservation_member);
+        return $reservation_member;
+    } catch (PDOException $e) {
+        echo json_encode(["sql error" => "{$e->getMessage()}"]);
+    }
+}
+
+//空席情報
 function getopen()
 {
     $pdo = connect_to_db();
@@ -60,19 +98,19 @@ function getopen()
         $status = $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $store_name = $_GET['store'];
+        $store_id = (int)$_GET['id'];
         $open_member = array();
 
         foreach ($result as $record) {
 
-            if ($record["store_name"] === $store_name) {
-                //var_dump($store_name);
+            if ($record["store_id"] === $store_id) {
+                //var_dump($record['id']);
 
 
                 $open_out = strtotime((string)$record['open_day']);
                 //var_dump($open_out);
 
-                $hour_out = $record['open_hour'];
+                $hour_out = "{$record['start_hour']}~{$record['close_hour']}";
 
                 $open_member[date('Y-m-d', $open_out)] = $hour_out;
             }
@@ -91,6 +129,7 @@ function getopen()
 //カレンダーへの表示
 $reservation_array = getreservation();
 //getreservation関数を$reservation_arrayに代入しておく
+$reservationlately_array = getreservationlately();
 $open_array = getopen();
 //var_dump($open_array);
 
@@ -104,13 +143,25 @@ function reservation($date, $reservation_array)
     }
 }
 
+
+function reservationlately($date, $reservationlately_array)
+{
+    //カレンダーの日付と予約された日付を照合する関数
+    if (array_key_exists($date, $reservationlately_array)) {
+        //もし"カレンダーの日付"と"予約された日"が一致すれば以下を実行する
+        $store_id = (int)$_GET['id'];
+        $open_member = "<br/><a href='alart_cash_create.php?id={$store_id}&date={$date}' class='bold'>あと少しで満席です</a><br/>時間：{$reservationlately_array[$date]}";
+        return $open_member;
+    }
+}
+
 function open($date, $open_array)
 {
     //カレンダーの日付と予約された日付を照合する関数
     if (array_key_exists($date, $open_array)) {
         //もし"カレンダーの日付"と"予約された日"が一致すれば以下を実行する
-        $store_name = $_GET['store'];
-        $open_member = "<br/><a href='customer_reserve_input.php?store={$store_name}&date={$date}' class='bold'>予約できます</a><br/>時間：{$open_array[$date]}";
+        $store_id = (int)$_GET['id'];
+        $open_member = "<br/><a href='alart_cash_create.php?id={$store_id}&date={$date}' class='bold'>予約できます</a><br/>時間：{$open_array[$date]}";
         return $open_member;
     }
 }
@@ -126,7 +177,7 @@ if (isset($_GET['ym'])) {
 } else {
     //今月の年月を表示
     $ym = date('Y-m');
-    $store_name = $_GET['store'];
+    $store_id = (int)$_GET['id'];
 }
 
 //タイムスタンプ（どの時刻を基準にするか）を作成し、フォーマットをチェックする
@@ -172,6 +223,7 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
 
     //予約情報//
     $reservation = reservation(date("Y-m-d", strtotime($date)), $reservation_array);
+    $reservationlately = reservationlately(date("Y-m-d", strtotime($date)), $reservationlately_array);
     $open = open(date("Y-m-d", strtotime($date)), $open_array);
 
     $donot_reserve = '<br/><p>予約できません</p>';
@@ -182,10 +234,14 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
     } else if ($today == $date && reservation(date("Y-m-d", strtotime($date)), $reservation_array)) {
         $week .= '<td  class="today">' . $day . $reservation;
         //予約情報//
+    } else if ($today == $date && reservationlately(date("Y-m-d", strtotime($date)), $reservationlately_array)) {
+        $week .= '<td  class="today">' . $day . $reservationlately;
     } else if ($today == $date) {
         $week .= '<td class="today">' . $day . $donot_reserve; //今日の場合はclassにtodayをつける
     } else if (reservation(date("Y-m-d", strtotime($date)), $reservation_array)) {
         $week .= '<td>' . $day . $reservation;
+    } else if (reservationlately(date("Y-m-d", strtotime($date)), $reservationlately_array)) {
+        $week .= '<td>' . $day . $reservationlately;
     } else if (open(date("Y-m-d", strtotime($date)), $open_array)) {
         $week .= '<td>' . $day . $open;
     } else {
@@ -207,6 +263,34 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
     }
 }
 
+//表示用
+$pdo = connect_to_db();
+$sql = "SELECT * FROM store_db";
+$stmt = $pdo->prepare($sql);
+
+try {
+
+    $status = $stmt->execute();
+    //fetchAll() 関数でデータ自体を取得する．
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    for ($i = 0; $i < count($result); $i++) {
+        $store_id = (int)$_GET['id'];
+
+        if ($result[$i]["id"] === $store_id) {
+            $store_name = $result[$i]["name"];
+        }
+    }
+    foreach ($result as $record) {
+
+        //header('Content-type: ' . $result['pictype']);
+        //echo $result['picture'];
+    }
+} catch (PDOException $e) {
+    echo json_encode(["sql error" => "{$e->getMessage()}"]);
+    //exit();
+}
+
 ?>
 
 
@@ -215,11 +299,19 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>たまりbar</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+
     <link rel="icon" href="img/favicon.ico"> <!-- ファビコンを設定 -->
     <link rel="apple-touch-icon" sizes="180x180" href="img/favicon.ico"> <!-- アップルタッチアイコンも設定 -->
-    <link rel="stylesheet" href="css/store_read.css">
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display+SC:400,700,900&amp;subset=latin-ext" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/animate.css">
+    <link rel="stylesheet" type="text/css" href="css/fontawesome-all.min.css">
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <!--<link rel="stylesheet" href="css/store_read.css">-->
     <style>
         h3 {
             margin-bottom: 30px;
@@ -265,22 +357,38 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
 <body>
 
     <header>
-        <div class="header__wrapper">
-            <div>
-                <h1 class="tamari_family">たまりbar</h1>
-                <p class="tamari_family">移住者のコミュニティーが生まれる</p>
-                <p>ユーザー名:<?= $_SESSION['username']; ?></p>
-            </div>
+        <div class="container d-none d-sm-block logo" style="text-align: center;">
+            <img class="img-fluid" src="images/logos/tamaribar_pc_logo.png" alt="">
+            <p class="sub-title">ユーザー名:<?= $_SESSION['username']; ?>さま</p>
+        </div>
 
-            <ul class="nav__list">
-                <li class="nav-item"><a href="store_read.php">店舗一覧に戻る</a></li>
-                <li class="nav-item"><a href="index.php">トップに戻る</a></li>
-                <li class="nav-item"><a href="customer_logout.php">ログアウトする</a></li>
-                <li class="nav-item"><a href="customer_register_edit.php?id=<?= $_SESSION['id']; ?>">ユーザー情報の編集</a></li>
-            </ul>
-
+        <div class="container my-2 my-md-4">
+            <nav class="navbar navbar-expand-sm navbar-light">
+                <a class="navbar-brand d-sm-none" href="index.php"><img class="img-fluid" src="images/logos/tamaribar_logo.png" alt=""></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse justify-content-sm-center" id="main-navbar">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="store_read.php">店舗一覧に戻る</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="customer_mypage.php?id=<?= $_SESSION['user_id']; ?>">ともだち</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php">トップに戻る</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="customer_logout.php">ログアウトする</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="customer_register_edit.php?id=<?= $_SESSION['user_id']; ?>">ユーザー情報の編集</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </div>
     </header>
+
+
 
     <h2 class="tamari_family"><?= $store_name ?>の予約ページ</h2>
 
@@ -288,7 +396,7 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
 
 
     <div class="container">
-        <h3><a href="?ym=<?php echo $prev; ?>&store=<?php echo $store_name; ?>">&lt;</a><?php echo $html_title; ?><a href="?ym=<?php echo $next; ?>&store=<?php echo $store_name; ?>">&gt;</a></h3>
+        <h3><a href="?ym=<?php echo $prev; ?>&id=<?php echo $store_id; ?>">&lt;</a><?php echo $html_title; ?><a href="?ym=<?php echo $next; ?>&id=<?php echo $store_id; ?>">&gt;</a></h3>
         <table class="table table-bordered">
             <tr>
                 <th>日</th>
@@ -307,8 +415,29 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
         </table>
     </div>
 
-    <footer>@高橋、ぱくたそ</footer>
+    <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="divider"></div>
+                    <div class="text-center">
+                        <a href="index.html"><img src="images/logos/tamaribar_logo.png" alt="" class="logo"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <p>© タカハシ</p>
+            </div>
+        </div>
+        </div>
+    </footer>
 
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="javascript/acos.jquery.js"></script>
+    <script src="javascript/script.js"></script>
 </body>
 
 </html>

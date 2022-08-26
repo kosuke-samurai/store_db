@@ -9,7 +9,7 @@ check_customer_session_id();
 // DB接続
 
 
-$id = $_SESSION["id"];
+$id = $_SESSION["user_id"];
 
 $pdo = connect_to_db();
 

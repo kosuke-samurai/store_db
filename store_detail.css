@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@400;500&family=Roboto:wght@100&display=swap');
+
+.tamari_family {
+    font-family: 'Kaisei Decol',
+        serif;
+}
+
+body {
+    margin: 0;
+    background-color: #F7F7F7;
+}
+
+header {
+    color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-size: cover;
+    height: 150px;
+    text-align: center;
+    background-color: #3cb371;
+}
+
+
+.store_header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-size: cover;
+    height: 150px;
+    text-align: center;
+    background-color: #3cb1b3;
+}
+
+main {
+    max-width: 960px;
+    margin: auto;
+    background-color: #FFFFFF;
+    text-align: center;
+    padding: 20px 0;
+
+}
+
+footer {
+    font-size: 16px;
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+    font-family: 'Kaisei Decol',
+        serif;
+}
+
+
+
+
+dt {
+    width: 280px;
+    padding: 0 0 0 0;
+    margin: 0 80px 0 0;
+    text-align: right;
+    font-size: 16px;
+}
+
+dd {
+    width: 410px;
+    margin: 0 0 24px;
+    text-align: justify;
+    font-size: 14px;
+}
+
+
+
+ul,
+li {
+    list-style: none;
+}
+
+.box {
+    margin: 10px auto;
+    padding: 20px;
+    width: 90%;
+    color: #666666;
+    background-color: #f7f7f7;
+    border: 2px solid #ccc;
+    border-radius: 2px;
+}
+
+.category {
+    margin: 0 0 24px 0;
+    width: 50px;
+}
+
+
+
+.button {
+    text-align: center;
+}
+
+.button {
+    background-color: #3cb371;
+    border: none;
+    color: #fff;
+    font-size: 21px;
+    width: 300px;
+    margin: auto;
+    padding: 18px 30px;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.margin {
+    margin-left: 10px;
+}
+
+.storelist {
+    text-align: center;
+}
+
+.detail {
+    padding: 10px 0;
+    margin: 10px auto;
+    padding: 20px;
+    width: 90%;
+    color: #666666;
+    background-color: #f7f7f7;
+    border: 2px solid #ccc;
+    border-radius: 2px;
+}
+
+a:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.detail {
+    text-align: left;
+
+}
+
+.mgr-100 {
+    margin-right: 10px;
+}
+
+.buttonli {
+    margin: 40px 0;
+}
+
+.map {
+    width: 100%;
+    height: 1400px;
+    background-color: grey;
+}
+
+/*css調整new*/
+
+.header__wrapper {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    align-items: center;
+}
+
+.nav__list {
+    display: flex;
+}
+
+.nav-item {
+    font-size: 21px;
+    margin: 24px;
+}
+
+.nav-item>a {
+    color: #FFFFFF;
+    text-transform: uppercase;
+}

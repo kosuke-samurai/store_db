@@ -57,8 +57,8 @@ for ($i = 0; $i < count($result); $i++) {
   //mb_language("Japanese"); //文字コードの設定
   //mb_internal_encoding("UTF-8");
 
-  $address = $result[$i]["adress"];
-  $apikey = getenv('YAHOO_MAP_KEY');
+  $address = "{$result[$i]["prefectures"]}{$result[$i]["adress"]}";
+  $apikey = "dj00aiZpPTRFcTZhNWVRRmZGTyZzPWNvbnN1bWVyc2VjcmV0Jng9NzU-";
   $address = urlencode($address);
   $url = "https://map.yahooapis.jp/geocode/V1/geoCoder?output=json&recursive=true&appid=" . $apikey . "&query=" . $address;
   $contents = file_get_contents($url);
@@ -83,8 +83,8 @@ for ($i = 0; $i < count($result); $i++) {
 //mb_internal_encoding("UTF-8");
 
 //住所（梅田スカイビル）を入れて緯度経度を求める。
-$address = $_SESSION['adress'];
-$apikey = getenv('YAHOO_MAP_KEY');
+$address = "{$_SESSION['prefectures']}{$_SESSION['adress']}";
+$apikey = "dj00aiZpPTRFcTZhNWVRRmZGTyZzPWNvbnN1bWVyc2VjcmV0Jng9NzU-";
 $address = urlencode($address);
 $url = "https://map.yahooapis.jp/geocode/V1/geoCoder?output=json&recursive=true&appid=" . $apikey . "&query=" . $address;
 $contents = file_get_contents($url);
@@ -104,11 +104,18 @@ $customer_idokeido =  array($lat, $lon);
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
   <link rel="icon" href="img/favicon.ico"> <!-- ファビコンを設定 -->
   <link rel="apple-touch-icon" sizes="180x180" href="img/favicon.ico"> <!-- アップルタッチアイコンも設定 -->
-  <link rel="stylesheet" href="css/store_read.css">
+
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display+SC:400,700,900&amp;subset=latin-ext" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/animate.css">
+  <link rel="stylesheet" type="text/css" href="css/fontawesome-all.min.css">
+  <link rel="stylesheet" type="text/css" href="css/swiper.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+
+  <!--<link rel="stylesheet" href="css/store_read.css">-->
   <style>
     #map {
       width: 100%;
@@ -120,74 +127,116 @@ $customer_idokeido =  array($lat, $lon);
 </head>
 
 <body>
+
+
+
   <header>
-    <div class="header__wrapper">
-      <div>
-        <h1 class="tamari_family">たまりbar</h1>
-        <p class="tamari_family">移住者のコミュニティーが生まれる</p>
-        <p>ユーザー名:<?= $_SESSION['username']; ?></p>
-      </div>
-
-      <ul class="nav__list">
-        <li class="nav-item"><a href="index.php">トップに戻る</a></li>
-        <li class="nav-item"><a href="customer_logout.php">ログアウトする</a></li>
-        <li class="nav-item"><a href="customer_register_edit.php?id=<?= $_SESSION['id']; ?>">ユーザー情報の編集</a></li>
-      </ul>
-
+    <div class="container d-none d-sm-block logo" style="text-align: center;">
+      <img class="img-fluid" src="images/logos/tamaribar_pc_logo.png" alt="">
+      <p class="sub-title">ユーザー名:<?= $_SESSION['username']; ?>さま</p>
     </div>
 
+    <div class="container my-2 my-md-4">
+      <nav class="navbar navbar-expand-sm navbar-light">
+        <a class="navbar-brand d-sm-none" href="index.php"><img class="img-fluid" src="images/logos/tamaribar_logo.png" alt=""></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse justify-content-sm-center" id="main-navbar">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="customer_mypage.php?id=<?= $_SESSION['user_id']; ?>">ともだち</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.php">トップに戻る</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="customer_logout.php">ログアウトする</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="customer_register_edit.php?id=<?= $_SESSION['user_id']; ?>">ユーザー情報の編集</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
   </header>
-
 
 
   <h2 class="tamari_family"><?= $_SESSION['username']; ?> さま周辺のお店</h2>
   <div id="map"></div>
 
-  <main>
-
-    <h2 class="tamari_family">お店の一覧</h2>
 
 
-    <ul class="storelist">
-      <?php for ($i = 0; $i < count($result); $i++) : ?>
+  <h2 class="tamari_family"><?= $_SESSION['username']; ?> さま周辺のお店の一覧</h2>
 
-        <div>
-          <div class="box">
-            <li>
-              <h2><?= $result[$i]["name"]; ?> </h2>
-            </li>
-            <li>
-              <img src="<?= $result[$i]['filesurl']; ?>" width="auto" height="300">
-            </li>
-            <li>
-              <ul class="detail">
-                <li>
-                  <h3>基本情報</h3>
-                </li>
-                <li>
-                  <p>お店のジャンル：<span class="bold"><?= $result[$i]["category"]; ?></span></p>
-                </li>
-                <li>
-                  <p>客層：<span class="bold"><?= $result[$i]["moodselect"]; ?></span></p>
-                </li>
-                <li>
-                  <p>予算：<span class="bold"><?= $result[$i]["budget"]; ?></span></p>
-                </li>
-                <li>
-                  <p>住所：<span class="bold"><?= $result[$i]["adress"]; ?></span></p>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="store_move.php?id=<?php echo $result[$i]['id']; ?>" class="button">詳細を見る</a>
-            </li>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 offset-lg-1 col-md-12">
+
+
+        <?php for ($i = 0; $i < count($result); $i++) : ?>
+
+          <?php if ($result[$i]["prefectures"] === $_SESSION['prefectures']) : ?>
+            <article>
+              <div style="text-align: center">
+                <img src="<?= $result[$i]['filesurl']; ?>" width="auto" height="400">
+              </div>
+
+              <div class="blog-post" data-acos="fadeInUp">
+                <div class="blog-post-header">
+                  <p class="categories store-categories"><?= $result[$i]["category"]; ?></p>
+                  <h2>
+                    <a href="store_move.php?id=<?php echo $result[$i]['id']; ?>"><?= $result[$i]["name"]; ?> </a>
+                  </h2>
+
+                  <div class="row">
+                    <div class="col-sm-6 blog-post-author">
+                      <?= $result[$i]["moodselect"]; ?>
+                    </div>
+                    <div class="col-sm-6 blog-post-date">
+                      <?= $result[$i]["budget"]; ?>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="blog-post-body">
+                  <h3>移住者の皆さんへメッセージ</h3>
+                  <p><?= $result[$i]["message"]; ?></p>
+                  <br>
+                  <p class="adress">住所: <?= $result[$i]["prefectures"]; ?><?= $result[$i]["adress"]; ?></p>
+                </div>
+              </div>
+            </article>
+          <?php endif; ?>
+        <?php endfor; ?>
+        <ul>
+      </div>
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="divider"></div>
+          <div class="text-center">
+            <a href="index.html"><img src="images/logos/tamaribar_logo.png" alt="" class="logo"></a>
           </div>
         </div>
-      <?php endfor; ?>
-      <ul>
+      </div>
+      <div class="col-sm-3">
+        <p>© タカハシ</p>
+      </div>
+    </div>
+    </div>
+  </footer>
 
-  </main>
 
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="javascript/acos.jquery.js"></script>
+  <script src="javascript/script.js"></script>
 
   <script src="https://maps.googleapis.com/maps/api/js?key=<?= getenv('GOOGLE_MAP_KEY'); ?>"></script>
   <script>
@@ -244,11 +293,6 @@ $customer_idokeido =  array($lat, $lon);
       initMap();
     };
   </script>
-
-
-
-
-  </main>
 
 
 </body>

@@ -3,7 +3,6 @@
 //var_dump($_POST);
 //exit();
 
-
 // DB接続
 session_start();
 include('functions.php');
@@ -47,18 +46,22 @@ if (!$val) {
 } else if (password_verify($_POST['password'], $val['password']) && $val['is_admin'] === 1) {
     $_SESSION = array();
     $_SESSION['session_id'] = session_id();
-    $_SESSION['id'] = $val['id'];
+    $_SESSION['user_id'] = $val['id'];
+    $_SESSION['is_premier'] = $val['is_premier'];
     $_SESSION['is_admin'] = $val['is_admin'];
     $_SESSION['username'] = $val['username'];
+    $_SESSION['prefectures'] = $val['prefectures'];
     $_SESSION['adress'] = $val['adress'];
     header("Location:store_manege.php");
     exit();
 } else if (password_verify($_POST['password'], $val['password']) && $val['is_admin'] === 0) {
     $_SESSION = array();
     $_SESSION['session_id'] = session_id();
-    $_SESSION['id'] = $val['id'];
+    $_SESSION['user_id'] = $val['id'];
+    $_SESSION['is_premier'] = $val['is_premier'];
     $_SESSION['is_admin'] = $val['is_admin'];
     $_SESSION['username'] = $val['username'];
+    $_SESSION['prefectures'] = $val['prefectures'];
     $_SESSION['adress'] = $val['adress'];
     header("Location:store_read.php");
     exit();

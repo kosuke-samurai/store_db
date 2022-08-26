@@ -1,6 +1,6 @@
 <?php
 
-
+/*デプロイ用
 function connect_to_db()
 {
   $db = parse_url($_SERVER['CLEARDB_DATABASE_URL']);
@@ -16,10 +16,10 @@ function connect_to_db()
   $dbh = new PDO($dsn, $user, $password, $options);
   return $dbh;
 }
+*/
 
 
 
-/*
 function connect_to_db()
 {
   $dbn = 'mysql:dbname=gs_graduation_program;charset=utf8mb4;port=3306;host=localhost';
@@ -34,7 +34,7 @@ function connect_to_db()
     exit();
   }
 }
-*/
+
 
 
 function check_store_session_id()
@@ -58,6 +58,23 @@ function check_customer_session_id()
     exit();
   } else if ($_SESSION['is_admin'] === 1) {
     header('Location:customer_login.php');
+    exit();
+  } else {
+    session_regenerate_id(true);
+    $_SESSION["session_id"] = session_id();
+  }
+}
+
+function check_premier_customer_session_id()
+{
+  if (!isset($_SESSION["session_id"]) || $_SESSION["session_id"] != session_id()) {
+    header('Location:customer_login.php');
+    exit();
+  } else if ($_SESSION['is_admin'] === 1) {
+    header('Location:customer_login.php');
+    exit();
+  } else if ($_SESSION['is_premier'] != "有料プラン") {
+    header('Location:alart_cash_create.php');
     exit();
   } else {
     session_regenerate_id(true);

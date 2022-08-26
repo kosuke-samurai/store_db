@@ -4,9 +4,9 @@ include("functions.php");
 check_store_session_id();
 
 //var_dump($_GET);
-$store_name = $_GET['store'];
+$store_id = (int)$_GET['id'];
 
-//カレンダーの情報取得
+//イベント開催日
 function getreservationday()
 {
     $pdo = connect_to_db();
@@ -19,25 +19,25 @@ function getreservationday()
         $status = $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $store_name = $_GET['store'];
+        $store_id = (int)$_GET['id'];
         $reservation_member = array();
 
         foreach ($result as $record) {
 
-            if ($record["store_name"] === $store_name) {
+            if ($record["store_id"] === $store_id) {
                 $day_out = strtotime((string)$record['open_day']);
                 //登録された全ての日付情報を文字列として$day_outへ格納
                 //echo $day_out;
                 //echo date('Y-m-d', $day_out);
                 //exit();
 
-                $hour_out = (string) $record['open_hour'];
+                $hour_out = "{$record['start_hour']}~{$record['close_hour']}";
                 //予約された全ての日のそれぞれの人数を文字列として$member_outへ格納
                 //例：echo $member_out; → 3
 
-                $item_out = $record['secret_item'];
+                //$item_out = $record['secret_item'];
 
-                $reservation_member[date('Y-m-d', $day_out)] = $hour_out . "/" . $item_out;
+                $reservation_member[date('Y-m-d', $day_out)] = $hour_out;
             }
         }
         ksort($reservation_member);
@@ -48,13 +48,16 @@ function getreservationday()
 }
 
 
-//new!
+//予約あり
 function getreservationdeta()
 {
     $pdo = connect_to_db();
 
-    $sql =
-        "SELECT * FROM reserve_table LEFT OUTER JOIN store_reserve_table ON reserve_table.reserve_day = store_reserve_table.open_day";
+    $sql = "SELECT event_id, customer_number, store_id, reserve_day, open_day, start_hour, close_hour, COUNT(is_reserve) AS reserve_count FROM (SELECT event_id, customer_number, reserve_table.store_id, reserve_day, is_reserve, open_day, start_hour, close_hour FROM reserve_table LEFT OUTER JOIN store_reserve_table ON reserve_table.reserve_day = store_reserve_table.open_day AND reserve_table.store_id = store_reserve_table.store_id) AS reserve_record_table GROUP BY event_id
+";
+
+    //$sql =
+    //  "SELECT * FROM reserve_table LEFT OUTER JOIN store_reserve_table ON reserve_table.reserve_day = store_reserve_table.open_day";
 
     $stmt = $pdo->prepare($sql);
 
@@ -62,24 +65,65 @@ function getreservationdeta()
         $status = $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $store_name = $_GET['store'];
+        $store_id = (int)$_GET['id'];
         $reservationdeta_member = array();
+        //$reservationdeta_id =  array();
 
         foreach ($result as $record) {
-            if ($record["store_name"] === $store_name) {
+            if ($record["store_id"] === $store_id) {
                 $day_out = strtotime((string)$record['reserve_day']);
                 //登録された全ての日付情報を文字列として$day_outへ格納
                 //echo $day_out;
                 //echo date('Y-m-d', $day_out);
                 //exit();
 
-                $hour_out = (string) $record['open_hour'];
+                $hour_out = "{$record['start_hour']}~{$record['close_hour']}";
                 //予約された全ての日のそれぞれの人数を文字列として$member_outへ格納
                 //例：echo $member_out; → 3
 
-                $item_out = $record['secret_item'];
+                //$item_out = $record['secret_item'];
 
-                $reservationdeta_member[date('Y-m-d', $day_out)] = $hour_out . "/" . $item_out;
+                //$reservationdeta_id[date('Y-m-d', $day_out)] = $id;
+                $reservationdeta_member[date('Y-m-d', $day_out)] = $hour_out;
+            }
+        }
+        ksort($reservationdeta_member);
+        return $reservationdeta_member;
+        //ksort($reservationdeta_id);
+        //return $reservationdeta_id;
+    } catch (PDOException $e) {
+        echo json_encode(["sql error" => "{$e->getMessage()}"]);
+    }
+}
+
+//予約あり2
+function getreservationdetadetail()
+{
+    $pdo = connect_to_db();
+
+    $sql = "SELECT event_id, customer_number, store_id, reserve_day, open_day, start_hour, close_hour, COUNT(is_reserve) AS reserve_count FROM (SELECT event_id, customer_number, reserve_table.store_id, reserve_day, is_reserve, open_day, start_hour, close_hour FROM reserve_table LEFT OUTER JOIN store_reserve_table ON reserve_table.reserve_day = store_reserve_table.open_day AND reserve_table.store_id = store_reserve_table.store_id) AS reserve_record_table GROUP BY event_id
+";
+
+    //$sql =
+    //  "SELECT * FROM reserve_table LEFT OUTER JOIN store_reserve_table ON reserve_table.reserve_day = store_reserve_table.open_day";
+
+    $stmt = $pdo->prepare($sql);
+
+    try {
+        $status = $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $store_id = (int)$_GET['id'];
+        $reservationdeta_member = array();
+        //$reservationdeta_id =  array();
+
+        foreach ($result as $record) {
+            if ($record["store_id"] === $store_id) {
+                $day_out = strtotime((string)$record['reserve_day']);
+
+                $id = $record['event_id'];
+
+                $reservationdeta_member[date('Y-m-d', $day_out)] = $id;
             }
         }
         ksort($reservationdeta_member);
@@ -89,6 +133,7 @@ function getreservationdeta()
     }
 }
 
+
 //カレンダーへの表示
 $reservation_array = getreservationday();
 //getreservation関数を$reservation_arrayに代入しておく
@@ -96,12 +141,14 @@ $reservation_array = getreservationday();
 $reservationdeta_array = getreservationdeta();
 //var_dump($reservationdeta_array);
 
+$getreservationdetadetail_array = getreservationdetadetail();
+
 function reservation($date, $reservation_array)
 {
     //カレンダーの日付と予約された日付を照合する関数
     if (array_key_exists($date, $reservation_array)) {
         //もし"カレンダーの日付"と"予約された日"が一致すれば以下を実行する
-        $reservation_member = "<br/>登録済<br/>実施時間/アイテム：<br/>$reservation_array[$date]";
+        $reservation_member = "<br/>登録済<br/>実施時間：<br/>$reservation_array[$date]";
         return $reservation_member;
     }
 }
@@ -111,10 +158,22 @@ function reservationdeta($date, $reservationdeta_array)
     //カレンダーの日付と予約された日付を照合する関数
     if (array_key_exists($date, $reservationdeta_array)) {
         //もし"カレンダーの日付"と"予約された日"が一致すれば以下を実行する
-        $reservationdeta_member = "<br/><span class='red'>予約あり</span><br/>実施時間/アイテム：<br/>$reservationdeta_array[$date]";
+        $reservationdeta_member = "<br/><span class='red'>予約あり</span><br/>実施時間：<br/>$reservationdeta_array[$date]";
         return $reservationdeta_member;
     }
 }
+
+function reservationdetadetail($date, $getreservationdetadetail_array)
+{
+    //カレンダーの日付と予約された日付を照合する関数
+    if (array_key_exists($date, $getreservationdetadetail_array)) {
+        //もし"カレンダーの日付"と"予約された日"が一致すれば以下を実行する
+        $reservationdeta_member = "<br/><a class='bold' href='store_confirm_guest.php?id={$getreservationdetadetail_array[$date]}'>来店情報を確認する</a>";
+        return $reservationdeta_member;
+    }
+}
+
+
 
 //***/
 //タイムゾーンを設定
@@ -165,14 +224,16 @@ $week .= str_repeat('<td></td>', $youbi);
 for ($day = 1; $day <= $day_count; $day++, $youbi++) {
 
     $date = $ym . '-' . $day; //2020-00-00
-
+    $today = date('Y-m-j');
 
     //var_dump($date);
 
     //予約情報//
     $reservation = reservation(date("Y-m-d", strtotime($date)), $reservation_array);
     $reservationdeta = reservationdeta(date("Y-m-d", strtotime($date)), $reservationdeta_array);
-    $do_open = "<br/><a href='store_open_input.php?store={$store_name}&date={$date}'>登録する</a>";
+    $reservationdetadetail = reservationdetadetail(date("Y-m-d", strtotime($date)), $getreservationdetadetail_array);
+
+    $do_open = "<br/><a href='store_open_input.php?id={$store_id}&date={$date}'>登録する</a>";
     $old = '<br/><p>登録不可</p>';
 
     if ($date < $today) {
@@ -184,7 +245,7 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
         $week .= '<td class="today">' . $day . $do_open; //今日の場合はclassにtodayをつける
         //予約情報//
     } else if (reservationdeta(date("Y-m-d", strtotime($date)), $reservationdeta_array)) {
-        $week .= '<td>' . $day . $reservationdeta;
+        $week .= '<td>' . $day . $reservationdeta . $reservationdetadetail;
     } else if (reservation(date("Y-m-d", strtotime($date)), $reservation_array)) {
         $week .= '<td>' . $day . $reservation;
     } else {
@@ -205,6 +266,35 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
         $week = ''; //weekをリセット
     }
 }
+
+//表示名用
+$pdo = connect_to_db();
+$sql = "SELECT * FROM store_db";
+$stmt = $pdo->prepare($sql);
+
+try {
+    $status = $stmt->execute();
+    //fetchAll() 関数でデータ自体を取得する．
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    for ($i = 0; $i < count($result); $i++) {
+        $store_id = (int)$_GET['id'];
+
+        if ($result[$i]["id"] === $store_id) {
+            $store_name = $result[$i]["name"];
+        }
+    }
+
+    foreach ($result as $record) {
+
+        //header('Content-type: ' . $result['pictype']);
+        //echo $result['picture'];
+    }
+} catch (PDOException $e) {
+    echo json_encode(["sql error" => "{$e->getMessage()}"]);
+    //exit();
+}
+
 
 ?>
 
@@ -270,7 +360,7 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
                 <li class="nav-item"><a href="store_manege.php">管理者ページに戻る</a></li>
                 <li class="nav-item"><a href="index.php">トップに戻る</a></li>
                 <li class="nav-item"><a href="store_logout.php">ログアウトする</a></li>
-                <li class="nav-item"><a href="store_register_edit.php?id=<?= $_SESSION['id']; ?>">ユーザー情報の編集</a></li>
+                <li class="nav-item"><a href="store_register_edit.php?id=<?= $_SESSION['user_id']; ?>">ユーザー情報の編集</a></li>
             </ul>
 
         </div>
@@ -281,7 +371,7 @@ for ($day = 1; $day <= $day_count; $day++, $youbi++) {
 
 
     <div class="container">
-        <h3><a href="?ym=<?php echo $prev; ?>&store=<?php echo $store_name; ?>">&lt;</a><?php echo $html_title; ?><a href="?ym=<?php echo $next; ?>&store=<?php echo $store_name; ?>">&gt;</a></h3>
+        <h3><a href="?ym=<?php echo $prev; ?>&id=<?php echo $store_id; ?>">&lt;</a><?php echo $html_title; ?><a href="?ym=<?php echo $next; ?>&id=<?php echo $store_id; ?>">&gt;</a></h3>
         <table class="table table-bordered">
             <tr>
                 <th>日</th>

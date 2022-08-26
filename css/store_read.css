@@ -310,3 +310,153 @@ a {
         transform: translateX(-200%);
     }
 }
+
+
+/*チャット*/
+
+.container {
+    width: 50%;
+    margin: 30px auto;
+}
+
+.message-area-text textarea {
+    width: 100%;
+    height: 100%;
+    resize: none;
+    /* これでユーザーのリサイズをできなくする */
+    border: 1px solid #ddd;
+    /* 枠線をつけて領域を分かりやすく */
+    box-sizing: border-box;
+    /* borderを付けてるので、border込の大きさにする */
+}
+
+.message-area-button button {
+    width: 100%;
+    height: 100%;
+    background: #84e248;
+    font-size: 2.0rem;
+    font-weight: bold;
+    border: 0;
+}
+
+.speech-bubble {
+    overflow: hidden;
+    padding-bottom: 10px;
+}
+
+.speech-bubble p {
+    margin: 0;
+}
+
+.speech-bubble {
+    background: #ffffff;
+}
+
+.speech-bubble:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+.speech-bubble:before {
+    content: "";
+    display: table;
+}
+
+.sb-bubble:after,
+.sb-bubble:before {
+    content: " ";
+    height: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 1.2em;
+    width: 0;
+}
+
+.sb-left {
+    float: left;
+    margin-left: 20px;
+}
+
+.sb-right {
+    float: right;
+    margin-right: 20px;
+}
+
+.sb-right-name {
+    float: right;
+    margin-right: 220px;
+}
+
+
+/*** 現ライン風（フラット２） ***/
+
+.sb-line3 {
+    border: solid 2px #84e248;
+    border-radius: .5em;
+    max-width: 70%;
+    padding: .2em 1em;
+    position: relative;
+}
+
+.sb-line3.sb-left {
+    font-size: 20px;
+    background: #84e248;
+    border-top-left-radius: 0;
+}
+
+.sb-line3-name.sb-left {
+    background: #ffffff;
+    border-top-right-radius: 0;
+}
+
+.sb-line3.sb-left:after {
+    background: #ffffff;
+    border: solid #84e248;
+    border-radius: 0 1em 0 0;
+    border-width: 2px 2px 0 0;
+    height: .5em;
+    right: 100%;
+    top: -2px;
+    width: .5em;
+}
+
+.sb-line3.sb-left:before {
+    background: #84e248;
+    border-top: solid 2px #84e248;
+    height: .5em;
+    right: 100%;
+    top: -2px;
+    width: .5em;
+}
+
+.sb-line3.sb-right {
+    font-size: 20px;
+    background: #84e248;
+    border-top-right-radius: 0;
+}
+
+.sb-line3-name.sb-right {
+    background: #ffffff;
+    border-top-right-radius: 0;
+}
+
+.sb-line3.sb-right:after {
+    background: #ffffff;
+    border: solid 2px #84e248;
+    border-radius: 1em 0 0 0;
+    border-width: 2px 0 0 2px;
+    height: .5em;
+    left: 100%;
+    top: -2px;
+    width: .5em;
+}
+
+.sb-line3.sb-right:before {
+    background: #84e248;
+    border-top: solid 2px #84e248;
+    height: .5em;
+    left: 100%;
+    top: -2px;
+    width: .5em;
+}

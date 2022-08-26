@@ -21,7 +21,7 @@ if (
     exit("データが足りません");
 }
 
-$id = $_SESSION["id"];
+$id = $_SESSION["user_id"];
 
 $email = $_POST["email"];
 $postadress = $_POST["postadress"];

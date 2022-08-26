@@ -15,7 +15,7 @@ check_store_session_id();
 
 // DB接続
 if (
-  !isset($_POST["username"]) || $_POST["username"] == "" ||
+  !isset($_POST["user_id"]) || $_POST["user_id"] == "" ||
   !isset($_POST["name"]) || $_POST["name"] == "" ||
   //!isset($_FILES["picture"]) || $_FILES["picture"] == "" ||
 
@@ -29,6 +29,7 @@ if (
   !isset($_POST["budget"]) || $_POST["budget"] == "" ||
   !isset($_POST["openday"]) || $_POST["openday"] == "" ||
   !isset($_POST["postadress"]) || $_POST["postadress"] == "" ||
+  !isset($_POST["prefectures"]) || $_POST["prefectures"] == "" ||
   !isset($_POST["adress"]) || $_POST["adress"] == "" ||
   !isset($_POST["tell"]) || $_POST["tell"] == ""
 ) {
@@ -36,7 +37,7 @@ if (
 }
 
 //データの受取
-$username = $_POST["username"];
+$user_id = $_POST["user_id"];
 $name = $_POST["name"];
 //$picture = file_get_contents($_FILES["picture"]["tmp_name"]);
 //$pictype = $_FILES["picture"]["type"];
@@ -52,6 +53,7 @@ $scene = $_POST["scene"];
 $budget = $_POST["budget"];
 $openday = $_POST["openday"];
 $postadress = $_POST["postadress"];
+$prefectures = $_POST["prefectures"];
 $adress = $_POST["adress"];
 $tell = $_POST["tell"];
 
@@ -73,11 +75,12 @@ $pdo = connect_to_db();
 // （「dbError:...」が表示されたらdb接続でエラーが発生していることがわかる）
 
 // ★SQL作成&実行★ ※基本変えない。$sql以下記載のコードはphpmyadminで実行できるのを確認してからそれをコピペ
-$sql = "INSERT INTO store_db (id, name, filesurl, category, moodselect, moodtext, foodtext, message, scene, budget, openday, postadress, adress, tell, created_at, updated_at, username) VALUES (NULL, :name, :filesurl, :category, :moodselect, :moodtext, :foodtext, :message, :scene, :budget, :openday, :postadress, :adress, :tell,  now(), now(), :username)";
+$sql = "INSERT INTO store_db (id, user_id, name, filesurl, category, moodselect, moodtext, foodtext, message, scene, budget, openday, postadress, prefectures, adress, tell, created_at, updated_at) VALUES (NULL, :user_id, :name, :filesurl, :category, :moodselect, :moodtext, :foodtext, :message, :scene, :budget, :openday, :postadress, :prefectures, :adress, :tell,  now(), now())";
 
 $stmt = $pdo->prepare($sql);
 
 // バインド変数を設定 ※基本変えない。バインド変数が多ければココで追加
+$stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
 $stmt->bindValue(':name', $name, PDO::PARAM_STR);
 //$stmt->bindValue(':picture', $picture, PDO::PARAM_STR);
 //$stmt->bindValue(':pictype', $pictype, PDO::PARAM_STR);
@@ -93,9 +96,10 @@ $stmt->bindValue(':scene', $scene, PDO::PARAM_STR);
 $stmt->bindValue(':budget', $budget, PDO::PARAM_STR);
 $stmt->bindValue(':openday', $openday, PDO::PARAM_STR);
 $stmt->bindValue(':postadress', $postadress, PDO::PARAM_STR);
+$stmt->bindValue(':prefectures', $prefectures, PDO::PARAM_STR);
 $stmt->bindValue(':adress', $adress, PDO::PARAM_STR);
 $stmt->bindValue(':tell', $tell, PDO::PARAM_STR);
-$stmt->bindValue(':username', $username, PDO::PARAM_STR);
+
 
 // SQL実行（実行に失敗すると `sql error ...` が出力される）※基本変えない。
 try {
