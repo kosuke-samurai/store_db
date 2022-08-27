@@ -1,7 +1,8 @@
 <?php
 session_start();
 include('functions.php');
-check_premier_customer_session_id();
+check_customer_session_id();
+
 
 //var_dump($_GET);
 
