@@ -1,7 +1,7 @@
 <?php
 session_start();
 include("functions.php");
-check_premier_customer_session_id();
+check_customer_session_id();
 
 $store_id = (int)$_GET["id"];
 $reserve_day = $_GET["reserve_day"];
