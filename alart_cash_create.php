@@ -15,7 +15,7 @@ $session = \Stripe\Checkout\Session::create([
         ['price' => 'price_1LXOOVAYLwjaAQ1eplAucGyD', 'quantity' => 1],
     ],
 
-    'success_url' => "http://localhost/gs/gs_tamaribar/customer_reserve_input.php?id={$id}&date={$date}",
+    'success_url' => "https://tamaribar.herokuapp.com/customer_reserve_input.php?id={$id}&date={$date}",
     'cancel_url' => 'http://example.com/cancel',
 ]);
 ?>
