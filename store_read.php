@@ -177,7 +177,7 @@ $customer_idokeido =  array($lat, $lon);
           <?php if ($result[$i]["prefectures"] === $_SESSION['prefectures']) : ?>
             <article>
               <div style="text-align: center">
-                <img src="<?= $result[$i]['filesurl']; ?>" width="auto" height="400">
+                <img src="<?= $result[$i]['filesurl']; ?>" class="store-photo">
               </div>
 
               <div class="blog-post" data-acos="fadeInUp">
