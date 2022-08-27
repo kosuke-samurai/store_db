@@ -96,7 +96,7 @@ $lat = $geo[1];
 
                 <article>
                     <div style="text-align: center">
-                        <img src="<?= $detail['filesurl']; ?>" width="auto" height="400">
+                        <img src="<?= $detail['filesurl']; ?>" class="store-photo">
                     </div>
                     <div class="blog-post" data-acos="fadeInUp">
                         <div class="blog-post-header">
