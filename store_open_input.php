@@ -91,11 +91,11 @@ try {
         <form action="store_open_create.php" method="POST">
 
 
-            <input type="text" name="item_url" id="item_url" value="">
-            <input type="text" name="owner_id" value="<?= $_SESSION['user_id']; ?>">
-            <input type="text" name="store_id" value="<?= $store_id; ?>"><br />
-            <input type="text" name="open_day" value="<?= $open_day; ?>">
-            <input type="text" name="is_deleted" value="0">
+            <input type="hidden" name="item_url" id="item_url" value="">
+            <input type="hidden" name="owner_id" value="<?= $_SESSION['user_id']; ?>">
+            <input type="hidden" name="store_id" value="<?= $store_id; ?>"><br />
+            <input type="hidden" name="open_day" value="<?= $open_day; ?>">
+            <input type="hidden" name="is_deleted" value="0">
 
             <dl class="input">
 

@@ -34,7 +34,7 @@ $is_deleted = $_POST["is_deleted"];
 $pdo = connect_to_db();
 
 
-$sql = "INSERT INTO store_reserve_table (id, owner_id, store_id, open_day, start_hour, close_hour, customer_number, secret_item, item_url, item_detail, is_deleted, created_at, updated_at) VALUES (NULL, :owner_id, :store_id, :open_day, :start_hour, :close_hour, :customer_number, :secret_item, :item_url, :item_detail, :is_deleted, now(), now())";
+$sql = "INSERT INTO store_reserve_table (event_id, owner_id, store_id, open_day, start_hour, close_hour, customer_number, secret_item, item_url, item_detail, is_deleted, created_at, updated_at) VALUES (NULL, :owner_id, :store_id, :open_day, :start_hour, :close_hour, :customer_number, :secret_item, :item_url, :item_detail, :is_deleted, now(), now())";
 
 $stmt = $pdo->prepare($sql);
 

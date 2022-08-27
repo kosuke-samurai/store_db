@@ -56,8 +56,8 @@ check_store_session_id();
 
     <form action="store_create.php" method="POST" enctype="multipart/form-data">
 
-      <input type="text" name="filesurl" id="filesurl" value="">
-      <input type="text" name="user_id" value="<?= $_SESSION['user_id']; ?>">
+      <input type="hidden" name="filesurl" id="filesurl" value="">
+      <input type="hidden" name="user_id" value="<?= $_SESSION['user_id']; ?>">
 
       <dl class="input">
 
