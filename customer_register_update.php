@@ -42,7 +42,7 @@ $stmt = $pdo->prepare($sql);
 // バインド変数を設定 ※基本変えない。バインド変数が多ければココで追加
 $stmt->bindValue(':email', $email, PDO::PARAM_STR);
 $stmt->bindValue(':postadress', $postadress, PDO::PARAM_STR);
-$stmt->bindValue(':prefectures', $postadress, PDO::PARAM_STR);
+$stmt->bindValue(':prefectures', $prefectures, PDO::PARAM_STR);
 $stmt->bindValue(':adress', $adress, PDO::PARAM_STR);
 $stmt->bindValue(':tell', $tell, PDO::PARAM_STR);
 $stmt->bindValue(':is_premier', $is_premier, PDO::PARAM_STR);
