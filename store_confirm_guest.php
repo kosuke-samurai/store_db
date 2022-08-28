@@ -92,7 +92,7 @@ try {
         <ul class="storelist">
             <?php for ($i = 0; $i < count($result); $i++) : ?>
 
-                <?php if ($result[$i]["event_id"] === $ivent_id) : ?>
+                <?php if ($result[$i]["event_id"] === $ivent_id && $result[$i]["is_reserve"] === 1) : ?>
                     <div>
                         <div class="box">
                             <li>
