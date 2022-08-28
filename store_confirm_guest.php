@@ -13,7 +13,7 @@ $ivent_id = (int)$_GET['id'];
 
 $pdo = connect_to_db();
 
-$sql = "SELECT * FROM users_table LEFT OUTER JOIN (SELECT id, user_id, reserve_day, reserve_message FROM reserve_table LEFT OUTER JOIN store_reserve_table ON reserve_table.reserve_day = store_reserve_table.open_day AND reserve_table.store_id = store_reserve_table.store_id) AS reserve_confirm_table ON reserve_confirm_table.user_id = users_table.id";
+$sql = "SELECT * FROM users_table INNER JOIN (SELECT event_id, reserve_id, user_id, reserve_day, reserve_message FROM reserve_table INNER JOIN store_reserve_table ON reserve_table.reserve_day = store_reserve_table.open_day AND reserve_table.store_id = store_reserve_table.store_id) AS reserve_confirm_table ON reserve_confirm_table.user_id = users_table.id;";
 
 $stmt = $pdo->prepare($sql);
 
@@ -92,7 +92,7 @@ try {
         <ul class="storelist">
             <?php for ($i = 0; $i < count($result); $i++) : ?>
 
-                <?php if ($result[$i]["id"] === $ivent_id && $result[$i]["is_premier"] === "有料プラン") : ?>
+                <?php if ($result[$i]["event_id"] === $ivent_id) : ?>
                     <div>
                         <div class="box">
                             <li>
