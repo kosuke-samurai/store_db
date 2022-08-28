@@ -119,7 +119,7 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">郵便番号（ハイフンなし）</label>
                                 <div class="col-sm-10 animated-form-control">
-                                    <input type="text" pattern="^[0-9]*$" name="postadress" class="info text form-control" value="<?= $record['postadress'] ?>" required maxlength="8" onKeyUp="AjaxZip3.zip2addr(this,'','adress','adress');">
+                                    <input type="text" pattern="^[0-9]*$" name="postadress" class="info text form-control" value="<?= $record['postadress'] ?>" required maxlength="8" onKeyUp="AjaxZip3.zip2addr(this,'','prefectures','adress');">
                                 </div>
                             </div>
 
