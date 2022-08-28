@@ -130,7 +130,7 @@ $record = $stmt->fetch(PDO::FETCH_ASSOC);
                                 <label class="col-sm-2 col-form-label">都道府県</label>
 
                                 <div class="col-sm-10 animated-form-control">
-                                    <select name="prefectures" class="info text form-control" value="<?= $record['prefectures'] ?>">
+                                    <select name="prefectures" class="info text form-control" value="">
                                         <option value="" selected>都道府県</option>
                                         <option value="北海道">北海道</option>
                                         <option value="青森県">青森県</option>
