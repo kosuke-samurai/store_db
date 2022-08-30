@@ -58,7 +58,7 @@ $adress = $_POST["adress"];
 $tell = $_POST["tell"];
 
 //sql
-$sql = 'UPDATE store_db SET name=:name, filesurl=:filesurl, category=:category, moodselect=:moodselect, moodtext=:moodtext, foodtext=:foodtext, message=:message, scene=:scene, budget=:budget, openday=:openday, postadress=:postadress, prefectures=:prefectures, adress=:adress, tell=:tell, username=:username, updated_at=now() WHERE id=:id';
+$sql = 'UPDATE store_db SET name=:name, filesurl=:filesurl, category=:category, moodselect=:moodselect, moodtext=:moodtext, foodtext=:foodtext, message=:message, scene=:scene, budget=:budget, openday=:openday, postadress=:postadress, prefectures=:prefectures, adress=:adress, tell=:tell, updated_at=now() WHERE id=:id';
 
 $stmt = $pdo->prepare($sql);
 
