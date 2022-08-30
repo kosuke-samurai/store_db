@@ -14,7 +14,7 @@ $pdo = connect_to_db();
 // DB接続
 if (
   !isset($_POST["id"]) || $_POST["id"] == "" ||
-  !isset($_POST["username"]) || $_POST["username"] == "" ||
+  !isset($_POST["user_id"]) || $_POST["user_id"] == "" ||
   !isset($_POST["name"]) || $_POST["name"] == "" ||
   //!isset($_FILES["picture"]) || $_FILES["picture"] == "" ||
 
@@ -28,6 +28,7 @@ if (
   !isset($_POST["budget"]) || $_POST["budget"] == "" ||
   !isset($_POST["openday"]) || $_POST["openday"] == "" ||
   !isset($_POST["postadress"]) || $_POST["postadress"] == "" ||
+  !isset($_POST["prefectures"]) || $_POST["prefectures"] == "" ||
   !isset($_POST["adress"]) || $_POST["adress"] == "" ||
   !isset($_POST["tell"]) || $_POST["tell"] == ""
 ) {
@@ -36,7 +37,7 @@ if (
 
 //データの受取
 $id = $_POST["id"];
-$username = $_POST["username"];
+$user_id = $_POST["user_id"];
 $name = $_POST["name"];
 //$picture = file_get_contents($_FILES["picture"]["tmp_name"]);
 //$pictype = $_FILES["picture"]["type"];
@@ -52,11 +53,12 @@ $scene = $_POST["scene"];
 $budget = $_POST["budget"];
 $openday = $_POST["openday"];
 $postadress = $_POST["postadress"];
+$prefectures = $_POST["prefectures"];
 $adress = $_POST["adress"];
 $tell = $_POST["tell"];
 
 //sql
-$sql = 'UPDATE store_db SET name=:name, filesurl=:filesurl, category=:category, moodselect=:moodselect, moodtext=:moodtext, foodtext=:foodtext, message=:message, scene=:scene, budget=:budget, openday=:openday, postadress=:postadress, adress=:adress, tell=:tell, username=:username, updated_at=now() WHERE id=:id';
+$sql = 'UPDATE store_db SET name=:name, filesurl=:filesurl, category=:category, moodselect=:moodselect, moodtext=:moodtext, foodtext=:foodtext, message=:message, scene=:scene, budget=:budget, openday=:openday, postadress=:postadress, prefectures=:prefectures, adress=:adress, tell=:tell, username=:username, updated_at=now() WHERE id=:id';
 
 $stmt = $pdo->prepare($sql);
 
@@ -76,6 +78,7 @@ $stmt->bindValue(':scene', $scene, PDO::PARAM_STR);
 $stmt->bindValue(':budget', $budget, PDO::PARAM_STR);
 $stmt->bindValue(':openday', $openday, PDO::PARAM_STR);
 $stmt->bindValue(':postadress', $postadress, PDO::PARAM_STR);
+$stmt->bindValue(':prefectures', $prefectures, PDO::PARAM_STR);
 $stmt->bindValue(':adress', $adress, PDO::PARAM_STR);
 $stmt->bindValue(':tell', $tell, PDO::PARAM_STR);
 $stmt->bindValue(':username', $username, PDO::PARAM_STR);
