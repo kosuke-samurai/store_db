@@ -58,11 +58,13 @@ $adress = $_POST["adress"];
 $tell = $_POST["tell"];
 
 //sql
-$sql = 'UPDATE store_db SET name=:name, filesurl=:filesurl, category=:category, moodselect=:moodselect, moodtext=:moodtext, foodtext=:foodtext, message=:message, scene=:scene, budget=:budget, openday=:openday, postadress=:postadress, prefectures=:prefectures, adress=:adress, tell=:tell, updated_at=now() WHERE id=:id';
+$sql = 'UPDATE store_db SET user_id=:user_id, name=:name, filesurl=:filesurl, category=:category, moodselect=:moodselect, moodtext=:moodtext, foodtext=:foodtext, message=:message, scene=:scene, budget=:budget, openday=:openday, postadress=:postadress, prefectures=:prefectures, adress=:adress, tell=:tell, updated_at=now() WHERE id=:id';
 
 $stmt = $pdo->prepare($sql);
 
 // バインド変数を設定 ※基本変えない。バインド変数が多ければココで追加
+
+$stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
 $stmt->bindValue(':name', $name, PDO::PARAM_STR);
 //$stmt->bindValue(':picture', $picture, PDO::PARAM_STR);
 //$stmt->bindValue(':pictype', $pictype, PDO::PARAM_STR);
@@ -81,7 +83,7 @@ $stmt->bindValue(':postadress', $postadress, PDO::PARAM_STR);
 $stmt->bindValue(':prefectures', $prefectures, PDO::PARAM_STR);
 $stmt->bindValue(':adress', $adress, PDO::PARAM_STR);
 $stmt->bindValue(':tell', $tell, PDO::PARAM_STR);
-$stmt->bindValue(':username', $username, PDO::PARAM_STR);
+
 $stmt->bindValue(':id', $id, PDO::PARAM_STR);
 
 
