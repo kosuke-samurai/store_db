@@ -30,7 +30,7 @@ try {
 
     $output = "";
     foreach ($result as $record) {
-        if ($store_id === $record["store_id"] && $open_day === $record["reserve_day"]) {
+        if ($store_id === $record["store_id"] && $reserve_day === $record["open_day"]) {
             //var_dump($record["secret_item"]);
 
             $output .= "<h2>お待ちしております</h2>
