@@ -12,8 +12,9 @@ $session = \Stripe\Checkout\Session::create([
     'payment_method_types' => ['card'],
     'mode' => 'payment',
     'line_items' => [
-        ['price' => 'price_1LXOOVAYLwjaAQ1eplAucGyD', 'quantity' => 1],
+        ['price' => 'price_1LdtejAYLwjaAQ1eRTuZPDFu', 'quantity' => 1],
     ],
+
 
     'success_url' => "https://tamaribar.herokuapp.com/customer_reserve_input.php?id={$id}&date={$date}",
     'cancel_url' => 'http://example.com/cancel',
@@ -80,7 +81,7 @@ $session = \Stripe\Checkout\Session::create([
 
 
 
-    <h2>「待ち人」として予約するには300円お支払いください</h2>
+    <h2>「待ち人」として予約するには600円お支払いください</h2>
 
     <div class="opening-button" style="text-align: center;">
         <button id="checkout-button" class="btn btn-primary">決済に進む</button>

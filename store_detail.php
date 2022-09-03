@@ -164,7 +164,7 @@ $lat = $geo[1];
 
 
                 <div class="opening-button" style="text-align: center;">
-                    <a href="reserve.php?id=<?php echo $detail['id'] ?>" class="btn btn-primary">「待ち人」として予約する(300円/1回)</a>
+                    <a href="reserve.php?id=<?php echo $detail['id'] ?>" class="btn btn-primary">「待ち人」として予約する(600円/1回)</a>
                 </div>
                 <div class="opening-button" style="text-align: center;">
                     <a href="visit.php?id=<?php echo $detail['id'] ?>" class="btn btn-primary">待ち人を探しに行く(無料)</a>
