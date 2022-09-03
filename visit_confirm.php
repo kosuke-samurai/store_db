@@ -15,7 +15,7 @@ $pdo = connect_to_db();
 
 // SQL作成&実行
 
-$sql = "SELECT * FROM reserve_table LEFT OUTER JOIN store_reserve_table ON reserve_table.reserve_day = store_reserve_table.open_day AND reserve_table.store_id = store_reserve_table.store_id";
+$sql = "SELECT * FROM store_reserve_table";
 
 
 
@@ -30,7 +30,7 @@ try {
 
     $output = "";
     foreach ($result as $record) {
-        if ($store_id === $record["store_id"] && $reserve_day === $record["reserve_day"] && $_SESSION["user_id"] === $record["user_id"]) {
+        if ($store_id === $record["store_id"] && $open_day === $record["reserve_day"]) {
             //var_dump($record["secret_item"]);
 
             $output .= "<h2>お待ちしております</h2>
