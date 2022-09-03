@@ -4,6 +4,72 @@ session_start();
 include("functions.php");
 check_customer_session_id();
 
+
+
+$store_id = (int)$_GET["id"];
+$reserve_day = $_GET["reserve_day"];
+
+
+$pdo = connect_to_db();
+
+
+// SQL作成&実行
+
+$sql = "SELECT * FROM reserve_table LEFT OUTER JOIN store_reserve_table ON reserve_table.reserve_day = store_reserve_table.open_day AND reserve_table.store_id = store_reserve_table.store_id";
+
+
+
+$stmt = $pdo->prepare($sql);
+
+
+// SQL実行（実行に失敗すると `sql error ...` が出力される）※基本変えない。
+try {
+    $status = $stmt->execute();
+    //fetchAll() 関数でデータ自体を取得する．
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $output = "";
+    foreach ($result as $record) {
+        if ($store_id === $record["store_id"] && $reserve_day === $record["reserve_day"] && $_SESSION["user_id"] === $record["user_id"]) {
+            //var_dump($record["secret_item"]);
+
+            $output .= "<h2>お待ちしております</h2>
+        <div class=container>
+        <div class=row>
+            <div class=margin-auto>
+
+             <article style=padding: 200px 0;>
+             <div>
+             <div>
+
+            <h3>秘密のアイテム</h3>
+            <p>{$record["secret_item"]}</p>
+
+            <h3>写真（秘密のアイテム）</h3>
+            <img src='{$record["item_url"]}' width='200' height='auto'>
+
+            <h3>ご利用日 </h3>
+            <p>{$record["open_day"]}</p>
+
+            <h3>お時間</h3>
+            <p>{$record["start_hour"]}~{$record["close_hour"]}</p>
+            
+
+        </div>
+        </div>
+        </article>
+        </div>
+        </div>
+        </div>
+        ";
+        }
+    }
+} catch (PDOException $e) {
+    echo json_encode(["sql error" => "{$e->getMessage()}"]);
+    //exit();
+    $output .= "<h2>利用登録を再度お試しください</h2>";
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -64,9 +130,9 @@ check_customer_session_id();
     </header>
 
 
-    <main>
-        <h2>お待ちしております</h2>
-    </main>
+    <div style="text-align: center;">
+        <?= $output ?>
+    </div>
 
 
     <footer class="page-footer">
