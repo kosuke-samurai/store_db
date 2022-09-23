@@ -11,7 +11,7 @@ check_store_session_id();
 //var_dump($_GET);
 
 $open_day = $_GET["date"];
-$store_id = $_GET['id'];
+$store_id = (int)$_GET['id'];
 //var_dump($open_day);
 
 //表示名用
