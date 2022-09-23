@@ -25,7 +25,7 @@ try {
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     for ($i = 0; $i < count($result); $i++) {
-        if ($result[$i]["store_id"] === $store_id) {
+        if ($result[$i]["id"] === $store_id) {
             $store_name = $result[$i]["name"];
         }
     }
