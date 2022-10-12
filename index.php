@@ -18,6 +18,15 @@
 
     <title>たまりbar</title>
 
+    <meta property="og:site_name" content="たまりBAR">
+    <meta property="og:title" content="たまりBAR">
+    <meta property="og:description" content="「秘密のアイテム」で移住者にコミュニティーを。地方圏移住を促す新たな飲食店予約サービス。">
+    <meta property="og:url" content="https://tamaribar.herokuapp.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="img/tamaribar_ogp.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+
 </head>
 
 <body>
