@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" href="css/swiper.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
-    <title>たまりbar</title>
+    <title>たまりBAR</title>
 
     <meta property="og:site_name" content="たまりBAR">
     <meta property="og:title" content="たまりBAR">

@@ -56,7 +56,7 @@ try {
 
     <!-- <link rel="stylesheet" href="css/store_input.css"> -->
     <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
-    <title>たまりbar</title>
+    <title>たまりBAR</title>
 
     <meta property="og:site_name" content="たまりBAR">
     <meta property="og:title" content="たまりBAR">

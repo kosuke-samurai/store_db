@@ -60,7 +60,16 @@ try {
     <link rel="apple-touch-icon" sizes="180x180" href="img/favicon.ico"> <!-- アップルタッチアイコンも設定 -->
     <link rel="stylesheet" href="css/store_read.css">
     <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
-    <title>たまりbar</title>
+    <title>たまりBAR</title>
+
+    <meta property="og:site_name" content="たまりBAR">
+    <meta property="og:title" content="たまりBAR">
+    <meta property="og:description" content="「秘密のアイテム」で移住者にコミュニティーを。地方圏移住を促す新たな飲食店予約サービス。">
+    <meta property="og:url" content="https://tamaribar.herokuapp.com">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://tamaribar.herokuapp.com/img/tamaribar_ogp.png">
+    <meta name="twitter:card" content="summary_large_image">
+
 </head>
 
 <body>
