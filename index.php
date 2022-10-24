@@ -64,10 +64,10 @@
             <div class="col-md-12 col-lg-10 offset-lg-1 menu-card page-indent" style="text-align: center;">
                 <h2 class="decoration-stars">すべての移住者へ</h2>
                 <h3 class="">偶然の出会いを生む、必然を</h3>
-                <p>「たまりbar」は、移住者の皆さんへ向けた新しい飲食店予約のカタチです。</p>
+                <p>「たまりBAR」は、移住者の皆さんへ向けた新しい飲食店予約のカタチです。</p>
 
                 <p>移住した地で、友達が作れない。移住に興味があっても、新たな土地で人間関係が築けるか分からないーー。</p>
-                <p>そんな皆さんへ「たまりbar」は、新たなコミュニティ創りのあり方を提供します。</p>
+                <p>そんな皆さんへ「たまりBAR」は、新たなコミュニティー創りのあり方を提供します。</p>
 
                 <div class="opening-button">
                     <a href="customer_register_input.php" class="btn btn-primary">新規登録する</a>
